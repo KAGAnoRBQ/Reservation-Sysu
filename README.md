@@ -9,8 +9,8 @@
 按照一下的sql来规范建表吧：
 
 CREATE TABLE `user_info` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `user_name` varchar(255) NOT NULL DEFAULT '',
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,<br>
+  `user_name` varchar(255) NOT NULL DEFAULT '',<br>
   `user_alias` varchar(255) NOT NULL DEFAULT '',
 	`user_number` varchar(255) NOT NULL DEFAULT '',
 	`user_type` tinyint(1) unsigned NOT NULL DEFAULT 0,
