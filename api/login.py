@@ -1,3 +1,4 @@
+# coding: utf-8
 from api.form import LoginForm
 from flask import request
 from common.utils import param_error

@@ -16,5 +16,5 @@ BABEL_DEFAULT_TIMEZONE = 'Asia/Shanghai'
 
 # Auth
 # AUTH = "auth.noauth:NoAuth"
-AUTH = "auth.oauth2:Oauth2"
+AUTH = "auth.oauth2.Oauth2"
 OAUTH_AUTHORIZE_URL = "/server/login/"

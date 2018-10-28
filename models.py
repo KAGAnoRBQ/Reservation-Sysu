@@ -1,3 +1,4 @@
+# coding: utf-8
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.mysql import (
     BIGINT, VARCHAR, DATETIME, BOOLEAN, TINYINT

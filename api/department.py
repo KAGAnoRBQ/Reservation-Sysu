@@ -1,3 +1,4 @@
+# coding: utf-8
 from common.views import login_required_api
 from api.form import AddDepartmentForm, DeleteByIdForm
 from flask import request
