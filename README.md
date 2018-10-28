@@ -8,22 +8,22 @@
 
 按照一下的sql来规范建表吧：
 
-CREATE TABLE `user_info` (
+CREATE TABLE `user_info` (<br>
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,<br>
   `user_name` varchar(255) NOT NULL DEFAULT '',<br>
-  `user_alias` varchar(255) NOT NULL DEFAULT '',
-	`user_number` varchar(255) NOT NULL DEFAULT '',
-	`user_type` tinyint(1) unsigned NOT NULL DEFAULT 0,
-	`dept_id` bigint(20) unsigned NOT NULL DEFAULT 0,
-  `password` varchar(255) NOT NULL DEFAULT '',
-	`account_balance` bigint(20) unsigned NOT NULL DEFAULT 0,
-	`disabled` tinyint(1) unsigned NOT NULL DEFAULT 0,
-  `record_status` tinyint(1) unsigned NOT NULL DEFAULT 0,
-  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-	UNIQUE `uni_username`(`user_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
+  `user_alias` varchar(255) NOT NULL DEFAULT '',<br>
+	`user_number` varchar(255) NOT NULL DEFAULT '',<br>
+	`user_type` tinyint(1) unsigned NOT NULL DEFAULT 0,<br>
+	`dept_id` bigint(20) unsigned NOT NULL DEFAULT 0,<br>
+  `password` varchar(255) NOT NULL DEFAULT '',<br>
+	`account_balance` bigint(20) unsigned NOT NULL DEFAULT 0,<br>
+	`disabled` tinyint(1) unsigned NOT NULL DEFAULT 0,<br>
+  `record_status` tinyint(1) unsigned NOT NULL DEFAULT 0,<br>
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,<br>
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,<br>
+  PRIMARY KEY (`id`),<br>
+	UNIQUE `uni_username`(`user_name`)<br>
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;<br>
 
 关于 API 接口
 参照 first_group_api.docx 来写吧
