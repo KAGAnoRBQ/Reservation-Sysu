@@ -1,4 +1,4 @@
-from models import db, User
+from models import db, UserInfo
 from common.views import login_required
 
 
@@ -10,9 +10,9 @@ def db_add():
         'username': 'test_name',
         'password': 'test'
     }
-    user_info = User(**user_data)
+    user_info = UserInfo(**user_data)
     db.session.add(user_info)
     db.session.commit()
     return dict(
-        success='success'
+        success='code_success'
     )

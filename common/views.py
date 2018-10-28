@@ -28,7 +28,7 @@ def login_required_api(func):
     def _func(*args, **kwargs):
         if not current_user.is_authenticated:
             return {
-                'success': False,
+                'code_success': False,
                 'message': 'Login Required'
             }
         return func(*args, **kwargs)

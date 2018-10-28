@@ -12,14 +12,11 @@ from pydash import pick
 def add_department():
     form = AddDepartmentForm(request.form)
     if not form.validate():
-        return reply(success=False, message='参数错误', error_code=const.param_err)
+        return reply(success=False, message='参数错误', error_code=const.code_param_err)
 
-    if utils.is_code_exist(Department, form.code.data)[0]:
-        return reply(success=False, message='该部门已存在', error_code=const.param_illegal)
     department_data = {
-        'code': form.code.data,
-        'name': form.name.data,
-        'record_status': const.Normal,
+        'dept_name': form.dept_name.data,
+        'record_status': const.record_normal,
     }
     res = utils.add_by_data(Department, department_data)
     return reply(success=res[0], message=res[1], error_code=res[2])
@@ -30,27 +27,20 @@ def add_department():
 def delete_department():
     form = DeleteByIdForm(request.form)
     if not form.validate():
-        return reply(success=False, message='参数错误', error_code=const.param_err)
+        return reply(success=False, message='参数错误', error_code=const.code_param_err)
 
     res = utils.delete_by_id(Department, form.id.data)
     return reply(success=res[0], message=res[1], error_code=res[2])
 
 
-fileds = ['id', 'name']
-
-
-def tran_to_json(record):
-    item = pick(record, fileds)
-    return item
-
-
 @login_required_api
 def query_department():
     departments = Department.query.order_by(
-        Department.name
+        Department.dept_name
     ).filter_by(
-        record_status=const.Normal
+        record_status=const.record_normal
     ).all()
-    data = map(lambda x: tran_to_json(x), departments)
-    data = list(data)
-    return reply(success=True, data=data, message='done', error_code=const.success)
+    data = []
+    for department in departments:
+        data.append(department.to_json())
+    return reply(success=True, data=data, message='done', error_code=const.code_success)

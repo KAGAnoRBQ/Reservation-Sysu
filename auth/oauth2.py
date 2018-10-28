@@ -4,7 +4,7 @@ from urllib import parse
 
 from flask import Flask, redirect, url_for, request, abort
 
-from models import User, db, ensure_session_removed
+from models import UserInfo, db, ensure_session_removed
 from auth.interface import AuthInterface
 
 

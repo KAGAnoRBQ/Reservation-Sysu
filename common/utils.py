@@ -9,7 +9,7 @@ import logging
 
 def param_error(errors):
     return {
-        'success': False,
+        'code_success': False,
         'message': '参数错误:%s。' % json.dumps(errors)
     }
 
@@ -17,7 +17,7 @@ def param_error(errors):
 def add_by_data(table, data, do_commit=True):
     record = table(**data)
     db.session.add(record)
-    resp = [True, '', const.success]
+    resp = [True, '', const.code_success]
     if do_commit:
         resp = db_commit()
     return resp
@@ -26,14 +26,14 @@ def add_by_data(table, data, do_commit=True):
 def update_by_data(records, update_data, do_commit=True):
     update_data['update_time'] = datetime.now()
     records.update(update_data)
-    resp = [True, '', const.success]
+    resp = [True, '', const.code_success]
     if do_commit:
         resp = db_commit()
     return resp
 
 
 delete_info = {
-    'record_status': const.Deleted,
+    'record_status': const.record_deleted,
     'update_time': datetime.now()
 }
 
@@ -43,17 +43,17 @@ def delete_by_id(table, id, do_commit=True):
     if res[0]:
         delete_info['update_time'] = datetime.now()
         res[1].update(delete_info)
-        resp = [True, '', const.success]
+        resp = [True, '', const.code_success]
         if do_commit:
             resp = db_commit()
         return resp
-    return False, '记录不存在', const.param_illegal
+    return False, '记录不存在', const.code_param_illegal
 
 
 def is_code_exist(table, data):
     ext = table.query.filter_by(
         code=data,
-        record_status=const.Normal
+        record_status=const.record_normal
     )
     if not ext.first():
         return False, None
@@ -63,7 +63,7 @@ def is_code_exist(table, data):
 def is_id_exist(table, data):
     ext = table.query.filter_by(
         id=data,
-        record_status=const.Normal
+        record_status=const.record_normal
     )
     if not ext.first():
         return False, None
@@ -73,7 +73,7 @@ def is_id_exist(table, data):
 def is_name_exist(table, data):
     ext = table.query.filter_by(
         name=data,
-        record_status=const.Normal
+        record_status=const.record_normal
     )
     if not ext.first():
         return False, None

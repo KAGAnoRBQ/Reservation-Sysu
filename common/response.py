@@ -6,5 +6,5 @@ def reply(success=True, data={}, message='', error_code=0):
         success=success,
         data=data,
         message=message,
-        error_code=error_code
+        error_code=error_code,
     )

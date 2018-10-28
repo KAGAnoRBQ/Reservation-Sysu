@@ -2,7 +2,7 @@
 
 from flask import Flask
 from auth.interface import AuthInterface
-from models import User, db, ensure_session_removed
+from models import UserInfo, db, ensure_session_removed
 
 
 class NoAuth(AuthInterface):
@@ -11,9 +11,9 @@ class NoAuth(AuthInterface):
 
     @ensure_session_removed
     def auth(self, *args, **kwargs):
-        user = User.query.filter(User.id == 1).first()
+        user = UserInfo.query.filter(UserInfo.id == 1).first()
         if not user:
-            user = User()
+            user = UserInfo()
             user.id = 1
             user.name = '匿名'
             user.username = 'anonymous'

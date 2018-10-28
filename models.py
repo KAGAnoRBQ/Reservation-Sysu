@@ -24,9 +24,9 @@ def ensure_session_removed(func):
 def db_commit():
     try:
         db.session.commit()
-        return True, '', const.success
+        return True, '', const.code_success
     except:
-        return False, '数据库操作失败', const.db_err
+        return False, '数据库操作失败', const.code_db_err
 
 
 class MySQLMixin(object):
@@ -36,14 +36,55 @@ class MySQLMixin(object):
     }
 
 
-class User(db.Model, MySQLMixin, UserMixin):
+class UserInfo(db.Model, MySQLMixin, UserMixin):
     id = db.Column(BIGINT(unsigned=True), primary_key=True)
-    name = db.Column(VARCHAR(255), nullable=False)
-    username = db.Column(VARCHAR(255), nullable=False)
+    user_name = db.Column(VARCHAR(255), nullable=False)
+    user_alias = db.Column(VARCHAR(255), nullable=False)
+    user_number = db.Column(VARCHAR(255), nullable=False)
+    user_type = db.Column(TINYINT(unsigned=True), default=0)
+    dept_id = db.Column(BIGINT(unsigned=True), nullable=False)
     password = db.Column(VARCHAR(255), nullable=False)
-    record_status = db.Column(TINYINT(unsigned=True), default=0)  # 0---success 1---delete
+    account_balance = db.Column(BIGINT(unsigned=True), nullable=False)
+    disabled = db.Column(TINYINT(unsigned=True), default=0)
+    record_status = db.Column(TINYINT(unsigned=True), default=0)  # 0---code_success 1---delete
     create_time = db.Column(DATETIME, default=datetime.now)
     update_time = db.Column(DATETIME, default=datetime.now)
+
+    def to_json(self):
+        _dict = self.__dict__
+        if "_sa_instance_state" in _dict:
+            del _dict["_sa_instance_state"]
+        return _dict
+
+
+class Gym(db.Model, MySQLMixin):
+    id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
+    gym_name = db.Column(VARCHAR(255), nullable=False)
+    location = db.Column(VARCHAR(255), nullable=False)
+    manager_id = db.Column(BIGINT(unsigned=True), nullable=False)
+    record_status = db.Column(TINYINT(unsigned=True), default=0)
+    create_time = db.Column(DATETIME, default=datetime.now)
+    update_time = db.Column(DATETIME, default=datetime.now)
+
+    def to_json(self):
+        _dict = self.__dict__
+        if "_sa_instance_state" in _dict:
+            del _dict["_sa_instance_state"]
+        return _dict
+
+
+class Department(db.Model, MySQLMixin):
+    id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
+    dept_name = db.Column(VARCHAR(255), nullable=False)
+    record_status = db.Column(TINYINT(unsigned=True), default=0)
+    create_time = db.Column(DATETIME, default=datetime.now)
+    update_time = db.Column(DATETIME, default=datetime.now)
+
+    def to_json(self):
+        _dict = self.__dict__
+        if "_sa_instance_state" in _dict:
+            del _dict["_sa_instance_state"]
+        return _dict
 
 
 class Device(db.Model, MySQLMixin):
@@ -66,16 +107,7 @@ class Device(db.Model, MySQLMixin):
 class Manufacturer(db.Model, MySQLMixin):
     id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
     name = db.Column(VARCHAR(255), nullable=False)
-    record_status = db.Column(TINYINT(unsigned=True), default=0)  # 0---success 1---delete
-    create_time = db.Column(DATETIME, default=datetime.now)
-    update_time = db.Column(DATETIME, default=datetime.now)
-
-
-class Department(db.Model, MySQLMixin):
-    id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
-    code = db.Column(VARCHAR(255), nullable=False)
-    name = db.Column(VARCHAR(255), nullable=False)
-    record_status = db.Column(TINYINT(unsigned=True), default=0)
+    record_status = db.Column(TINYINT(unsigned=True), default=0)  # 0---code_success 1---delete
     create_time = db.Column(DATETIME, default=datetime.now)
     update_time = db.Column(DATETIME, default=datetime.now)
 

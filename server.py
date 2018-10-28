@@ -5,7 +5,7 @@ from werkzeug.routing import Rule
 import api
 from models import db
 from flask_login import LoginManager
-from models import User
+from models import UserInfo
 from common.views import login_required_api
 
 
@@ -31,7 +31,7 @@ def init():
 
     app.wsgi_app = DispatcherMiddleware(__, {'/api': app.wsgi_app})
     login_manager = LoginManager(app)
-    login_manager.user_callback = lambda user_id: User.query.filter(User.id == user_id).first()
+    login_manager.user_callback = lambda user_id: UserInfo.query.filter(UserInfo.id == user_id).first()
 
     app.add_url_rule(IndexRule('/', endpoint='index'), view_func=index)
 
@@ -40,34 +40,11 @@ def init():
     # login
     app.add_url_rule('/user/login/', 'user_login', view_func=api.login, methods=['POST'])
     app.add_url_rule('/user/login_out/', 'user_login_out', view_func=api.login_out, methods=['POST'])
+    app.add_url_rule('/user/register/', 'user_register', view_func=api.register, methods=['POST'])
     # department
     app.add_url_rule('/department/add/', 'department_add', view_func=api.add_department, methods=['POST'])
     app.add_url_rule('/department/delete/', 'department_delete', view_func=api.delete_department, methods=['POST'])
     app.add_url_rule('/department/query/', 'department_query', view_func=api.query_department, methods=['GET'])
-
-    # member
-    app.add_url_rule('/department/member/add/', 'member_add', view_func=api.add_member, methods=['POST'])
-    app.add_url_rule('/department/member/delete/', 'member_delete', view_func=api.delete_member, methods=['POST'])
-    app.add_url_rule('/department/member/query/', 'member_query', view_func=api.query_member, methods=['POST'])
-
-    # device
-    app.add_url_rule('/device/document/add/', 'device_add', view_func=api.add_device, methods=['POST'])
-    app.add_url_rule('/device/document/delete/', 'device_delete', view_func=api.delete_device, methods=['POST'])
-    # achievement
-    app.add_url_rule('/device/achievement/add/', 'achievement_add', view_func=api.add_achievement, methods=['POST'])
-    app.add_url_rule('/device/achievement/delete/', 'achievement_delete', view_func=api.delete_achievement,
-                     methods=['POST'])
-    # manufacturer
-    app.add_url_rule('/device/manufacturer/add/', 'manufacturer_add', view_func=api.add_manufacturer, methods=['POST'])
-    app.add_url_rule('/device/manufacturer/delete/', 'manufacturer_delete', view_func=api.delete_manufacturer,
-                     methods=['POST'])
-    app.add_url_rule('/manufacturer/query/', 'manufacturer_query', view_func=api.query_manufacturer, methods=['GET'])
-
-    # device rent
-    app.add_url_rule('/device/lend/add/', 'device_lend_add', view_func=api.rent_device, methods=['POST'])
-    app.add_url_rule('/device/return/add/', 'device_return_add', view_func=api.return_device, methods=['POST'])
-    app.add_url_rule('/device/lend/delete/', 'device_lend_delete', view_func=api.delete_device_rent,
-                     methods=['POST'])
 
 
 init()

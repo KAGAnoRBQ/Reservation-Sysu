@@ -4,7 +4,19 @@ from wtforms.validators import *
 
 
 class LoginForm(wtforms.Form):
-    username = wtforms.StringField(validators=[DataRequired()])
+    user_name = wtforms.StringField(validators=[DataRequired()])
+    password = wtforms.StringField(validators=[DataRequired()])
+
+
+class AddDepartmentForm(wtforms.Form):
+    dept_name = wtforms.StringField(validators=[DataRequired()])
+
+
+class RegisterForm(wtforms.Form):
+    user_name = wtforms.StringField(validators=[DataRequired()])
+    user_alias = wtforms.StringField(validators=[DataRequired()])
+    user_number = wtforms.StringField(validators=[DataRequired()])
+    dept_id = wtforms.StringField(validators=[DataRequired()])
     password = wtforms.StringField(validators=[DataRequired()])
 
 
@@ -33,11 +45,6 @@ class AddAchievementForm(wtforms.Form):
     paper_description = wtforms.StringField(validators=[DataRequired()])
     competition_description = wtforms.StringField(validators=[DataRequired()])
     achievement_remark = wtforms.StringField(validators=[DataRequired()])
-
-
-class AddDepartmentForm(wtforms.Form):
-    code = wtforms.StringField(validators=[DataRequired()])
-    name = wtforms.StringField(validators=[DataRequired()])
 
 
 class AddMemberForm(wtforms.Form):
