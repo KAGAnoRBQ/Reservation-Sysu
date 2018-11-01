@@ -82,3 +82,30 @@ class QueryMemberForm(wtforms.Form):
 class QueryDefaultForm(wtforms.Form):
     page = wtforms.IntegerField()
     limit = wtforms.IntegerField()
+
+class AddPeriodData(wtforms.Form):
+    period_id = wtforms.IntegerField()
+    period_class_id = wtforms.IntegerField()
+    start_time = wtforms.DateTimeField(validators=[DataRequired()])
+    end_time = wtforms.DateTimeField(validators=[DataRequired()])
+
+class AddCourtResource(wtforms.Form):
+    source_id = wtforms.IntegerField()
+    date = wtforms.DateTimeField(validators=[DataRequired()])
+    period_id = wtforms.IntegerField()
+    court_id = wtforms.IntegerField()
+    court_number = wtforms.IntegerField()
+    occupied = wtforms.BooleanField()
+    max_order_court = wtforms.IntegerField()
+    order_count = wtforms.IntegerField()
+
+class AddShcedule(wtforms.Form):
+    resource_id = wtforms.IntegerField()
+    court_id = wtforms.IntegerField()
+    date = wtforms.DateTimeField(validators=[DataRequired()])
+    total = wtforms.IntegerField()
+    order_count = wtforms.IntegerField()
+    occupied_count = wtforms.IntegerField()
+    visible = wtforms.BooleanField()
+    enabled = wtforms.BooleanField()
+

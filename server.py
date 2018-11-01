@@ -47,6 +47,11 @@ def init():
     app.add_url_rule('/department/delete/', 'department_delete', view_func=api.delete_department, methods=['POST'])
     app.add_url_rule('/department/query/', 'department_query', view_func=api.query_department, methods=['GET'])
 
+    # time
+    app.add_url_rule('')
+
+    # ground
+
 
 init()
 

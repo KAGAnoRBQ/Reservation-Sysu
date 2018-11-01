@@ -85,8 +85,6 @@ class Department(db.Model, MySQLMixin):
         _dict = self.__dict__
         if "_sa_instance_state" in _dict:
             del _dict["_sa_instance_state"]
-        return _dict
-
 
 class Device(db.Model, MySQLMixin):
     id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
@@ -152,3 +150,51 @@ class Achievement(db.Model, MySQLMixin):
     record_status = db.Column(TINYINT(unsigned=True), default=0)
     create_time = db.Column(DATETIME, default=datetime.now)
     update_time = db.Column(DATETIME, default=datetime.now)
+
+return _dict
+
+class PeriodData(db.Model, MySQLMixin):
+    period_id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
+    period_class_id = db.Column(BIGINT(unsigned=True), default=0)
+    start_time = db.Column(DATETIME, default=datetime.now)
+    end_time = db.Column(DATETIME, default=datetime.now)
+    record_status = db.Column(TINYINT(unsigned=True), default=0)
+
+    def to_json(self):
+        _dict = self.__dict__
+        if "_sa_instance_state" in _dict:
+            del _dict["_sa_instance_state"]
+        return
+
+class CourtResource(db.Model, MySQLMixin):
+    resource_id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
+    date = db.Column(DATETIME, default=datetime.now)
+    period_id = db.Column(BIGINT(unsigned=True), default=0)
+    court_id = db.Column(BIGINT(unsigned=True), default=0)
+    court_number = db.Column(BIGINT(unsigned=True), default=0)
+    occupied = db.Column(BOOLEAN, default=False)
+    max_order_court = db.Column(BIGINT(unsigned=True), default=0)
+    order_count = db.Column(BIGINT(unsigned=True), default=0)
+    record_status = db.Column(TINYINT(unsigned=True), default=0)
+
+    def to_json(self):
+        _dict = self.__dict__
+        if "_sa_instance_state" in _dict:
+            del _dict["_sa_instance_state"]
+        return
+
+class Schedule(db.Model, MySQLMixin):
+    resource_id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
+    court_id = db.Column(BIGINT(unsigned=True), default=0)
+    date = db.Column(DATETIME, default=datetime.now)
+    total = db.Column(BIGINT(unsigned=True), default=0)
+    order_count = db.Column(BIGINT(unsigned=True), default=0)
+    occupied_count = db.Column(BIGINT(unsigned=True), default=0)
+    visible = db.Column(BOOLEAN, default=False)
+    enabled = db.Column(BOOLEAN, default=False)
+
+    def to_json(self):
+        _dict = self.__dict__
+        if "_sa_instance_state" in _dict:
+            del _dict["_sa_instance_state"]
+        return
