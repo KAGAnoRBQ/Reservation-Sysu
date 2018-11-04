@@ -12,7 +12,8 @@ code_param_err = 1
 code_param_illegal = 2
 code_db_err = 3
 code_inner_err = 4
-code_unknown_err = 5
+code_not_permit = 5
+code_unknown_err = 6
 
 # page
 current_page_default = 1

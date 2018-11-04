@@ -9,7 +9,7 @@ services:
     environment:
       MYSQL_DATABASE: reservation
       MYSQL_USER: root
-      MYSQL_ROOT_PASSWORD: ci
+      MYSQL_ROOT_PASSWORD: apiserver
   reservation_web:
     container_name: reservation_web
     build: .

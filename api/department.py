@@ -13,6 +13,12 @@ def add_department():
     form = AddDepartmentForm(request.form)
     if not form.validate():
         return reply(success=False, message='参数错误', error_code=const.code_param_err)
+    dept_exist = Department.query.filter_by(
+        dept_name=form.dept_name.data,
+        record_status=const.record_normal
+    ).first()
+    if dept_exist:
+        return reply(success=False, message='该部门已存在', error_code=const.code_param_illegal)
 
     department_data = {
         'dept_name': form.dept_name.data,

@@ -6,6 +6,7 @@ from flask_login import UserMixin
 import functools
 from datetime import datetime
 from common import const
+import logging
 
 db = SQLAlchemy()
 
@@ -25,7 +26,8 @@ def db_commit():
     try:
         db.session.commit()
         return True, '操作成功', const.code_success
-    except:
+    except Exception as exc:
+        logging.warning(exc)
         return False, '数据库操作失败', const.code_db_err
 
 
@@ -61,7 +63,7 @@ class Gym(db.Model, MySQLMixin):
     id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
     gym_name = db.Column(VARCHAR(255), nullable=False)
     location = db.Column(VARCHAR(255), nullable=False)
-    manager_id = db.Column(BIGINT(unsigned=True), nullable=False)
+    manager_number = db.Column(BIGINT(unsigned=True), nullable=False)
     record_status = db.Column(TINYINT(unsigned=True), default=0)
     create_time = db.Column(DATETIME, default=datetime.now)
     update_time = db.Column(DATETIME, default=datetime.now)

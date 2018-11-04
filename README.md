@@ -27,3 +27,20 @@ CREATE TABLE `user_info` (<br>
 
 关于 API 接口
 参照 first_group_api.docx 来写吧
+
+
+分页设计：
+    从url中传参 page(当前页数) limit（每页个数）
+    example: api/xxxx/xxx/query/?page=xx&limit=xx
+    返回
+    {
+        "data": [],  //查询的数据
+        "error_code": 0,
+        "message": "done",
+        "paging": {
+            "current": 1,  // 当前页
+            "pages": 10,   // 总页数
+            "records": 0   // 总记录数
+        },
+        "success": true
+    }

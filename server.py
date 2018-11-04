@@ -42,6 +42,7 @@ def init():
     app.add_url_rule('/user/login_out/', 'user_login_out', view_func=api.login_out, methods=['POST'])
     # user
     app.add_url_rule('/user/register/', 'user_register', view_func=api.register, methods=['POST'])
+    app.add_url_rule('/user/query/', 'user_query', view_func=api.query_user, methods=['POST'])
     app.add_url_rule('/user/permission/change/', 'user_permission_change', view_func=api.change_permission,
                      methods=['POST'])
     app.add_url_rule('/user/disable/change/', 'user_disable_change', view_func=api.change_disable,
@@ -51,6 +52,12 @@ def init():
     app.add_url_rule('/department/add/', 'department_add', view_func=api.add_department, methods=['POST'])
     app.add_url_rule('/department/delete/', 'department_delete', view_func=api.delete_department, methods=['POST'])
     app.add_url_rule('/department/query/', 'department_query', view_func=api.query_department, methods=['GET'])
+
+    # gym
+    app.add_url_rule('/gym/add/', 'gym_add', view_func=api.gym_add, methods=['POST'])
+    app.add_url_rule('/gym/query/', 'gym_query', view_func=api.query_gym, methods=['POST'])
+    app.add_url_rule('/gym/edit/', 'gym_edit', view_func=api.edit_gym, methods=['POST'])
+
 
 
 init()
