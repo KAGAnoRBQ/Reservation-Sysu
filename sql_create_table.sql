@@ -1,11 +1,11 @@
 CREATE TABLE `user_info` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `user_name` varchar(255) NOT NULL DEFAULT '',
-  `user_alias` varchar(255) NOT NULL DEFAULT '',
-	`user_number` varchar(255) NOT NULL DEFAULT '',
+  `user_name` varchar(127) NOT NULL DEFAULT '',
+  `user_alias` varchar(127) NOT NULL DEFAULT '',
+	`user_number` varchar(127) NOT NULL DEFAULT '',
 	`user_type` tinyint(1) unsigned NOT NULL DEFAULT 0,
 	`dept_id` bigint(20) unsigned NOT NULL DEFAULT 0,
-  `password` varchar(255) NOT NULL DEFAULT '',
+  `password` varchar(127) NOT NULL DEFAULT '',
 	`account_balance` bigint(20) unsigned NOT NULL DEFAULT 0,
 	`disabled` tinyint(1) unsigned NOT NULL DEFAULT 0,
   `record_status` tinyint(1) unsigned NOT NULL DEFAULT 0,
@@ -18,9 +18,9 @@ CREATE TABLE `user_info` (
 
 CREATE TABLE `gym` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `gym_name` varchar(255) NOT NULL DEFAULT '',
-  `location` varchar(255) NOT NULL DEFAULT '',
-	`manager_number` varchar(255) NOT NULL DEFAULT '',
+  `gym_name` varchar(127) NOT NULL DEFAULT '',
+  `location` varchar(127) NOT NULL DEFAULT '',
+	`manager_number` varchar(127) NOT NULL DEFAULT '',
   `record_status` tinyint(1) unsigned NOT NULL DEFAULT 0,
   `create_time` datetime NOT NULL,
   `update_time` datetime NOT NULL,
@@ -29,7 +29,7 @@ CREATE TABLE `gym` (
 
 CREATE TABLE `department` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `dept_name` varchar(255) NOT NULL DEFAULT '',
+  `dept_name` varchar(127) NOT NULL DEFAULT '',
   `record_status` tinyint(1) unsigned NOT NULL DEFAULT 0,
   `create_time` datetime NOT NULL,
   `update_time` datetime NOT NULL,
