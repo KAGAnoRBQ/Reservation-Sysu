@@ -24,7 +24,7 @@ def ensure_session_removed(func):
 def db_commit():
     try:
         db.session.commit()
-        return True, '', const.code_success
+        return True, '操作成功', const.code_success
     except:
         return False, '数据库操作失败', const.code_db_err
 

@@ -24,6 +24,16 @@ class DeleteByIdForm(wtforms.Form):
     id = wtforms.StringField(validators=[DataRequired()])
 
 
+class ChangePermissionForm(wtforms.Form):
+    user_id = wtforms.StringField(validators=[DataRequired()])
+    user_type = wtforms.StringField(validators=[DataRequired()])
+
+
+class ChangeDisableForm(wtforms.Form):
+    user_id = wtforms.StringField(validators=[DataRequired()])
+    disabled = wtforms.StringField(validators=[DataRequired()])
+
+
 class AddDeviceForm(wtforms.Form):
     code = wtforms.StringField(validators=[DataRequired()])
     name = wtforms.StringField(validators=[DataRequired()])
