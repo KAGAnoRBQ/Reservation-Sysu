@@ -5,10 +5,10 @@ from common.views import login_required
 @login_required
 def db_add():
     user_data = {
-        'id': 10,
+        'id': 23,
         'name': 'test',
-        'username': 'test_name',
-        'password': 'test'
+        'username': 'root',
+        'password': '123456'
     }
     user_info = UserInfo(**user_data)
     db.session.add(user_info)

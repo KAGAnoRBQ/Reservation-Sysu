@@ -21,6 +21,9 @@ class IndexRule(Rule):
 def init():
     db.init_app(app)
 
+    db.app = app
+    db.create_all()
+
     def __(_, resp):
         resp('404 Not Found', [('Content-Type', 'text/plain')])
         return [b'Not Found']
@@ -45,6 +48,8 @@ def init():
     app.add_url_rule('/department/add/', 'department_add', view_func=api.add_department, methods=['POST'])
     app.add_url_rule('/department/delete/', 'department_delete', view_func=api.delete_department, methods=['POST'])
     app.add_url_rule('/department/query/', 'department_query', view_func=api.query_department, methods=['GET'])
+
+    # booking
 
 
 init()
