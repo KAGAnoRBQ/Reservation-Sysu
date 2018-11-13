@@ -5,7 +5,7 @@ from wtforms.validators import *
 
 
 class LoginForm(wtforms.Form):
-    user_name = wtforms.StringField(validators=[DataRequired()])
+    user_number = wtforms.StringField(validators=[DataRequired()])
     password = wtforms.StringField(validators=[DataRequired()])
 
 
@@ -25,58 +25,34 @@ class DeleteByIdForm(wtforms.Form):
     id = wtforms.StringField(validators=[DataRequired()])
 
 
-class AddDeviceForm(wtforms.Form):
-    code = wtforms.StringField(validators=[DataRequired()])
-    name = wtforms.StringField(validators=[DataRequired()])
-    model = wtforms.StringField(validators=[DataRequired()])
-    brand = wtforms.StringField(validators=[DataRequired()])
-    tag_code = wtforms.StringField(validators=[DataRequired()])
-    description = wtforms.StringField(validators=[DataRequired()])
-    manufacturer_date = wtforms.DateTimeField(validators=[DataRequired()])
-    manufacturer_id = wtforms.StringField(validators=[DataRequired()])
-    department_id = wtforms.StringField(validators=[DataRequired()])
+class ChangePermissionForm(wtforms.Form):
+    user_id = wtforms.StringField(validators=[DataRequired()])
+    user_type = wtforms.StringField(validators=[DataRequired()])
 
 
-class AddAchievementForm(wtforms.Form):
-    device_code = wtforms.StringField(validators=[DataRequired()])
-    member_code = wtforms.StringField(validators=[DataRequired()])
-    manufacturer_date = wtforms.DateTimeField(validators=[DataRequired()])
-    achievement_description = wtforms.StringField(validators=[DataRequired()])
-    patent_description = wtforms.StringField(validators=[DataRequired()])
-    paper_description = wtforms.StringField(validators=[DataRequired()])
-    competition_description = wtforms.StringField(validators=[DataRequired()])
-    achievement_remark = wtforms.StringField(validators=[DataRequired()])
+class ChangeDisableForm(wtforms.Form):
+    user_id = wtforms.StringField(validators=[DataRequired()])
+    disabled = wtforms.StringField(validators=[DataRequired()])
 
 
-class AddMemberForm(wtforms.Form):
-    code = wtforms.StringField(validators=[DataRequired()])
-    name = wtforms.StringField(validators=[DataRequired()])
-    department_id = wtforms.StringField(validators=[DataRequired()])
-
-
-class AddManufacturerForm(wtforms.Form):
-    name = wtforms.StringField(validators=[DataRequired()])
-
-
-class RentDeviceForm(wtforms.Form):
-    device_code = wtforms.StringField(validators=[DataRequired()])
-    borrower_member_code = wtforms.StringField(validators=[DataRequired()])
-    borrow_date = wtforms.DateTimeField(validators=[DataRequired()])
-    borrow_remark = wtforms.StringField(validators=[DataRequired()])
-    expect_return_date = wtforms.DateTimeField(validators=[DataRequired()])
-
-
-class ReturnDeviceForm(wtforms.Form):
-    device_code = wtforms.StringField(validators=[DataRequired()])
-    returner_member_code = wtforms.StringField(validators=[DataRequired()])
-    return_date = wtforms.DateTimeField(validators=[DataRequired()])
-    return_remark = wtforms.StringField(validators=[DataRequired()])
-
-
-class QueryMemberForm(wtforms.Form):
+class QueryUserForm(wtforms.Form):
     id = wtforms.StringField()
-    code = wtforms.StringField()
-    name = wtforms.StringField()
+    user_name = wtforms.StringField()
+    user_alias = wtforms.StringField()
+    user_number = wtforms.StringField()
+    dept_id = wtforms.StringField()
+
+
+class AddGymForm(wtforms.Form):
+    gym_name = wtforms.StringField(validators=[DataRequired()])
+    location = wtforms.StringField(validators=[DataRequired()])
+    manager_number = wtforms.StringField(validators=[DataRequired()])
+
+
+class QueryGymForm(wtforms.Form):
+    gym_name = wtforms.StringField()
+    location = wtforms.StringField()
+    manager_number = wtforms.StringField()
 
 
 class QueryDefaultForm(wtforms.Form):
@@ -109,3 +85,8 @@ class AddShcedule(wtforms.Form):
     visible = wtforms.BooleanField()
     enabled = wtforms.BooleanField()
 
+class EditGymForm(wtforms.Form):
+    id = wtforms.StringField(validators=[DataRequired()])
+    gym_name = wtforms.StringField()
+    location = wtforms.StringField()
+    manager_number = wtforms.StringField()
