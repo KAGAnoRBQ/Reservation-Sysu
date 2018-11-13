@@ -3,7 +3,8 @@ SQLALCHEMY_ECHO = False
 SQLALCHEMY_POOL_RECYCLE = 30
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 SQLALCHEMY_COMMIT_ON_TEARDOWN = False
-SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:apiserver@127.0.0.1:3306/reservation?charset=utf8mb4'
+SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://admin:123@39.108.71.247:5000/reservation?charset=utf8mb4'
+# SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:apiserver@127.0.0.1:3306/reservation?charset=utf8mb4'
 # SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:apiserver@reservation_mysql:3306/reservation?charset=utf8mb4'
 
 # Flask

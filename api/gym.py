@@ -1,3 +1,4 @@
+# coding: utf-8
 from api.form import *
 from models import *
 from common import const, utils

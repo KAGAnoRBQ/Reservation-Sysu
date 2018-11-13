@@ -153,8 +153,6 @@ class Achievement(db.Model, MySQLMixin):
     create_time = db.Column(DATETIME, default=datetime.now)
     update_time = db.Column(DATETIME, default=datetime.now)
 
-return _dict
-
 class PeriodData(db.Model, MySQLMixin):
     period_id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
     period_class_id = db.Column(BIGINT(unsigned=True), default=0)
@@ -166,7 +164,7 @@ class PeriodData(db.Model, MySQLMixin):
         _dict = self.__dict__
         if "_sa_instance_state" in _dict:
             del _dict["_sa_instance_state"]
-        return
+        return _dict
 
 class CourtResource(db.Model, MySQLMixin):
     resource_id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
@@ -183,7 +181,7 @@ class CourtResource(db.Model, MySQLMixin):
         _dict = self.__dict__
         if "_sa_instance_state" in _dict:
             del _dict["_sa_instance_state"]
-        return
+        return _dict
 
 class Schedule(db.Model, MySQLMixin):
     resource_id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
@@ -199,4 +197,4 @@ class Schedule(db.Model, MySQLMixin):
         _dict = self.__dict__
         if "_sa_instance_state" in _dict:
             del _dict["_sa_instance_state"]
-        return
+        return _dict

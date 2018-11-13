@@ -16,14 +16,14 @@ def add_court_resource():
         return reply(success=False, message='参数错误', error_code=const.code_param_err)
 
     court_resource = {
-        'source_id' = form.source_id.data,
-        'date' = form.date.data,
-        'period_id' = form.period_id.data,
-        'court_id' = form.court_id.data,
-        'court_number' = form.court_number.data,
-        'occupied' = form.occupied.data,
-        'max_order_court' = form.max_order_court.data,
-        'order_count' = form.order_count.data,
+        'source_id': form.source_id.data,
+        'date': form.date.data,
+        'period_id': form.period_id.data,
+        'court_id': form.court_id.data,
+        'court_number': form.court_number.data,
+        'occupied': form.occupied.data,
+        'max_order_court': form.max_order_court.data,
+        'order_count': form.order_count.data,
         'record_status': const.record_normal,
     }
     res = utils.add_by_data(CourtResource, court_resource)

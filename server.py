@@ -9,7 +9,6 @@ from flask_login import LoginManager
 from models import UserInfo
 from common.views import login_required_api
 
-
 class IndexRule(Rule):
     def match(self, path, method=None):
         if path.startswith('|/api/'):
@@ -17,7 +16,6 @@ class IndexRule(Rule):
         if path.startswith('|/static/'):
             return
         return super().match(path='|/', method=method)
-
 
 def init():
     db.init_app(app)
@@ -54,16 +52,20 @@ def init():
     app.add_url_rule('/department/delete/', 'department_delete', view_func=api.delete_department, methods=['POST'])
     app.add_url_rule('/department/query/', 'department_query', view_func=api.query_department, methods=['GET'])
 
-    # time
-    app.add_url_rule('')
+    # court_resource
+    app.add_url_rule('/court_resource/add/', 'add_court_resource', view_func=api.add_court_resource, methods=['POST'])
+    app.add_url_rule('/court_resource/delete/', 'delete_court_resource', view_func=api.delete_court_resource, methods=['POST'])
+    app.add_url_rule('/court_resource/query/', 'query_court_resource', view_func=api.query_court_resource, methods=['POST'])
 
-    # ground
+    # time
+    app.add_url_rule('/period_data/add/', 'add_period_data', view_func=api.add_period_data, methods=['POST'])
+    app.add_url_rule('/period_data/delete/', 'delete_period_data', view_func=api.delete_period_data, methods=['POST'])
+    app.add_url_rule('/period_data/query/', 'query_period_data', view_func=api.query_period_data, methods=['POST'])
+
     # gym
     app.add_url_rule('/gym/add/', 'gym_add', view_func=api.gym_add, methods=['POST'])
     app.add_url_rule('/gym/query/', 'gym_query', view_func=api.query_gym, methods=['POST'])
     app.add_url_rule('/gym/edit/', 'gym_edit', view_func=api.edit_gym, methods=['POST'])
-
-
 
 init()
 

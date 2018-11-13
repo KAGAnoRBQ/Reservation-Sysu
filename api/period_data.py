@@ -7,7 +7,6 @@ from common.response import reply
 from models import PeriodData, ensure_session_removed
 from pydash import pick
 
-
 @login_required_api
 @ensure_session_removed
 def add_period_data():
