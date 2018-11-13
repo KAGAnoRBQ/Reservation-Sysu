@@ -15,7 +15,7 @@ class IndexRule(Rule):
             return
         if path.startswith('|/static/'):
             return
-        return super().match(path='|/', method=method)
+        return super(IndexRule, self).match(path='|/', method=method)
 
 def init():
     db.init_app(app)
@@ -24,7 +24,7 @@ def init():
         resp('404 Not Found', [('Content-Type', 'text/plain')])
         return [b'Not Found']
 
-    @login_required_api
+    # @login_required_api
     def index():
         return render_template('index.html')
 
@@ -36,6 +36,7 @@ def init():
 
     # test
     app.add_url_rule('/db_test/', 'api_db_test', view_func=api.db_add, methods=['GET'])
+
     # login
     app.add_url_rule('/user/login/', 'user_login', view_func=api.login, methods=['POST'])
     app.add_url_rule('/user/login_out/', 'user_login_out', view_func=api.login_out, methods=['POST'])

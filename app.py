@@ -30,10 +30,9 @@ class ServerFlask(Flask):
             if 'message' not in rv:
                 rv['message'] = 'ok'
             rv = jsonify(rv)
-        res = super().make_response(rv)
-
+        res = super(ServerFlask, self).make_response(rv)
         res.headers['Access-Control-Allow-Credentials'] = 'true'
-        res.headers['Access-Control-Allow-Origin'] = request.environ['HTTP_ORIGIN']
+        # res.headers['Access-Control-Allow-Origin'] = request.environ['HTTP_ORIGIN']
         # res.headers['Access-Control-Allow-Origin'] = '*'
         # res.headers['Access-Control-Allow-Methods'] = 'POST，GET,OPTIONS'
         res.headers['Access-Control-Allow-Headers'] = 'x-requested-with,content-type'
@@ -88,7 +87,6 @@ class ServerFlask(Flask):
 
 
 app = ServerFlask('server')
-
 CORS(app, resources=r'/*')
 
 app.url_map.converters['regex'] = RegexConverter
