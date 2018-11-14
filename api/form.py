@@ -60,10 +60,10 @@ class QueryDefaultForm(wtforms.Form):
     limit = wtforms.IntegerField()
 
 class AddPeriodData(wtforms.Form):
-    period_id = wtforms.IntegerField()
-    period_class_id = wtforms.IntegerField()
-    start_time = wtforms.DateTimeField(validators=[DataRequired()])
-    end_time = wtforms.DateTimeField(validators=[DataRequired()])
+    # period_id = wtforms.StringField(validators=[DataRequired()])
+    period_class_id = wtforms.StringField(validators=[DataRequired()])
+    # start_time = wtforms.DateTimeField(validators=[DataRequired()])
+    # end_time = wtforms.DateTimeField(validators=[DataRequired()])
 
 class AddCourtResource(wtforms.Form):
     source_id = wtforms.IntegerField()

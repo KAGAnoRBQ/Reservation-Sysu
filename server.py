@@ -61,7 +61,8 @@ def init():
     # time
     app.add_url_rule('/period_data/add/', 'add_period_data', view_func=api.add_period_data, methods=['POST'])
     app.add_url_rule('/period_data/delete/', 'delete_period_data', view_func=api.delete_period_data, methods=['POST'])
-    app.add_url_rule('/period_data/query/', 'query_period_data', view_func=api.query_period_data, methods=['POST'])
+    # app.add_url_rule('/period_data/query/', 'query_period_data', view_func=api.query_period_data, methods=['POST'])
+    app.add_url_rule('/period_data/query/', 'query_period_data', view_func=api.query_period_data, methods=['GET'])
 
     # gym
     app.add_url_rule('/gym/add/', 'gym_add', view_func=api.gym_add, methods=['POST'])

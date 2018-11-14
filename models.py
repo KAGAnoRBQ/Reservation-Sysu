@@ -158,6 +158,8 @@ class PeriodData(db.Model, MySQLMixin):
     period_class_id = db.Column(BIGINT(unsigned=True), default=0)
     start_time = db.Column(DATETIME, default=datetime.now)
     end_time = db.Column(DATETIME, default=datetime.now)
+    create_time = db.Column(DATETIME, default=datetime.now)
+    update_time = db.Column(DATETIME, default=datetime.now)
     record_status = db.Column(TINYINT(unsigned=True), default=0)
 
     def to_json(self):
