@@ -20,7 +20,7 @@ class RegexConverter(BaseConverter):
 
 class ServerFlask(Flask):
     def __init__(self, name, *args, **kwargs):
-        super().__init__(name, *args, **kwargs)
+        super(ServerFlask, self).__init__(name, *args, **kwargs)
         self.config.from_mapping(config)
 
     def make_response(self, rv):
@@ -30,9 +30,9 @@ class ServerFlask(Flask):
             if 'message' not in rv:
                 rv['message'] = 'ok'
             rv = jsonify(rv)
-        res = super().make_response(rv)
-
+        res = super(ServerFlask, self).make_response(rv)
         res.headers['Access-Control-Allow-Credentials'] = 'true'
+        # res.headers['Access-Control-Allow-Origin'] = request.environ['HTTP_ORIGIN']
         origin = ''
         try:
             origin = request.environ['HTTP_ORIGIN']
@@ -93,7 +93,6 @@ class ServerFlask(Flask):
 
 
 app = ServerFlask('server')
-
 CORS(app, resources=r'/*')
 
 app.url_map.converters['regex'] = RegexConverter

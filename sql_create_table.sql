@@ -36,3 +36,47 @@ CREATE TABLE `department` (
   PRIMARY KEY (`id`),
 	UNIQUE `uni_dept_name`(`dept_name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
+
+
+CREATE TABLE `period_data` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `period_class_id` bigint(20) unsigned NOT NULL,
+  `start_time` datetime NOT NULL,
+  `end_time` datetime NOT NULL,
+  `create_time` datetime NOT NULL,
+  `update_time` datetime NOT NULL,
+  `record_status` tinyint(1) unsigned NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
+
+
+CREATE TABLE `court_resource` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `date` datetime NOT NULL,
+  `period_id` bigint(20) unsigned NOT NULL,
+  `court_id` bigint(20) unsigned NOT NULL,
+  `court_number` bigint(20) unsigned NOT NULL,
+  `occupied` tinyint(1) unsigned NOT NULL DEFAULT 0,
+  `max_order_count` bigint(20) unsigned NOT NULL,
+  `order_count` bigint(20) unsigned NOT NULL,
+  `create_time` datetime NOT NULL,
+  `update_time` datetime NOT NULL,
+  `record_status` tinyint(1) unsigned NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
+
+
+CREATE TABLE `schedule` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `court_id` bigint(20) unsigned NOT NULL,
+  `date` datetime NOT NULL,
+  `total` bigint(20) unsigned NOT NULL,
+  `order_count` bigint(20) unsigned NOT NULL,
+  `occupied_count` bigint(20) unsigned NOT NULL,
+  `visible` tinyint(1) unsigned NOT NULL DEFAULT 0,
+  `enabled` tinyint(1) unsigned NOT NULL DEFAULT 0,
+  `create_time` datetime NOT NULL,
+  `update_time` datetime NOT NULL,
+  `record_status` tinyint(1) unsigned NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
