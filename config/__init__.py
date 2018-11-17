@@ -14,8 +14,8 @@ class Config(dict):
                 self[key] = getattr(obj, key)
 
 
-config1 = Config()
-config1.from_object('configd.conf')
+config = Config()
+config.from_object('config.conf')
 
 if __name__ == '__main__':
-    print(config1['SQLALCHEMY_TRACK_MODIFICATIONS'])
+    print(config['SQLALCHEMY_TRACK_MODIFICATIONS'])
