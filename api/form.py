@@ -60,30 +60,27 @@ class QueryDefaultForm(wtforms.Form):
     limit = wtforms.IntegerField()
 
 class AddPeriodData(wtforms.Form):
-    # period_id = wtforms.StringField(validators=[DataRequired()])
     period_class_id = wtforms.StringField(validators=[DataRequired()])
-    # start_time = wtforms.DateTimeField(validators=[DataRequired()])
-    # end_time = wtforms.DateTimeField(validators=[DataRequired()])
+    start_time = wtforms.DateTimeField(validators=[DataRequired()])
+    end_time = wtforms.DateTimeField(validators=[DataRequired()])
 
 class AddCourtResource(wtforms.Form):
-    source_id = wtforms.IntegerField()
     date = wtforms.DateTimeField(validators=[DataRequired()])
-    period_id = wtforms.IntegerField()
-    court_id = wtforms.IntegerField()
-    court_number = wtforms.IntegerField()
-    occupied = wtforms.BooleanField()
-    max_order_court = wtforms.IntegerField()
-    order_count = wtforms.IntegerField()
+    period_id = wtforms.StringField(validators=[DataRequired()])
+    court_id = wtforms.StringField(validators=[DataRequired()])
+    court_number = wtforms.StringField(validators=[DataRequired()])
+    occupied = wtforms.StringField(validators=[DataRequired()])
+    max_order_court = wtforms.StringField(validators=[DataRequired()])
+    order_count = wtforms.StringField(validators=[DataRequired()])
 
 class AddShcedule(wtforms.Form):
-    resource_id = wtforms.IntegerField()
-    court_id = wtforms.IntegerField()
+    court_id = wtforms.StringField(validators=[DataRequired()])
     date = wtforms.DateTimeField(validators=[DataRequired()])
-    total = wtforms.IntegerField()
-    order_count = wtforms.IntegerField()
-    occupied_count = wtforms.IntegerField()
-    visible = wtforms.BooleanField()
-    enabled = wtforms.BooleanField()
+    total = wtforms.StringField(validators=[DataRequired()])
+    order_count = wtforms.StringField(validators=[DataRequired()])
+    occupied_count = wtforms.StringField(validators=[DataRequired()])
+    visible = wtforms.StringField(validators=[DataRequired()])
+    enabled = wtforms.StringField(validators=[DataRequired()])
 
 class EditGymForm(wtforms.Form):
     id = wtforms.StringField(validators=[DataRequired()])

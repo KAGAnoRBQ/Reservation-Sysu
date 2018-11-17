@@ -1,6 +1,6 @@
 # coding: utf-8
 from common.views import login_required_api
-from api.form import AddPeriodData, DeleteByIdForm
+from api.form import AddCourtResource, DeleteByIdForm
 from flask import request
 from common import const, utils
 from common.response import reply
@@ -11,12 +11,12 @@ from pydash import pick
 @login_required_api
 @ensure_session_removed
 def add_court_resource():
+    print request.form
     form = AddCourtResource(request.form)
     if not form.validate():
         return reply(success=False, message='参数错误', error_code=const.code_param_err)
 
     court_resource = {
-        'source_id': form.source_id.data,
         'date': form.date.data,
         'period_id': form.period_id.data,
         'court_id': form.court_id.data,
@@ -33,6 +33,7 @@ def add_court_resource():
 @login_required_api
 @ensure_session_removed
 def delete_court_resource():
+    print request.form
     form = DeleteByIdForm(request.form)
     if not form.validate():
         return reply(success=False, message='参数错误', error_code=const.code_param_err)

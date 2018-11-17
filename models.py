@@ -154,7 +154,7 @@ class Achievement(db.Model, MySQLMixin):
     update_time = db.Column(DATETIME, default=datetime.now)
 
 class PeriodData(db.Model, MySQLMixin):
-    period_id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
+    id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
     period_class_id = db.Column(BIGINT(unsigned=True), default=0)
     start_time = db.Column(DATETIME, default=datetime.now)
     end_time = db.Column(DATETIME, default=datetime.now)
@@ -169,7 +169,7 @@ class PeriodData(db.Model, MySQLMixin):
         return _dict
 
 class CourtResource(db.Model, MySQLMixin):
-    resource_id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
+    id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
     date = db.Column(DATETIME, default=datetime.now)
     period_id = db.Column(BIGINT(unsigned=True), default=0)
     court_id = db.Column(BIGINT(unsigned=True), default=0)
@@ -177,6 +177,8 @@ class CourtResource(db.Model, MySQLMixin):
     occupied = db.Column(BOOLEAN, default=False)
     max_order_court = db.Column(BIGINT(unsigned=True), default=0)
     order_count = db.Column(BIGINT(unsigned=True), default=0)
+    create_time = db.Column(DATETIME, default=datetime.now)
+    update_time = db.Column(DATETIME, default=datetime.now)
     record_status = db.Column(TINYINT(unsigned=True), default=0)
 
     def to_json(self):
@@ -186,7 +188,7 @@ class CourtResource(db.Model, MySQLMixin):
         return _dict
 
 class Schedule(db.Model, MySQLMixin):
-    resource_id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
+    id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
     court_id = db.Column(BIGINT(unsigned=True), default=0)
     date = db.Column(DATETIME, default=datetime.now)
     total = db.Column(BIGINT(unsigned=True), default=0)
@@ -194,6 +196,9 @@ class Schedule(db.Model, MySQLMixin):
     occupied_count = db.Column(BIGINT(unsigned=True), default=0)
     visible = db.Column(BOOLEAN, default=False)
     enabled = db.Column(BOOLEAN, default=False)
+    create_time = db.Column(DATETIME, default=datetime.now)
+    update_time = db.Column(DATETIME, default=datetime.now)
+    record_status = db.Column(TINYINT(unsigned=True), default=0)
 
     def to_json(self):
         _dict = self.__dict__

@@ -1,10 +1,10 @@
 # coding: utf-8
 from common.views import login_required_api
-from api.form import AddPeriodData, DeleteByIdForm
+from api.form import AddShcedule, DeleteByIdForm
 from flask import request
 from common import const, utils
 from common.response import reply
-from models import CourtResource, ensure_session_removed
+from models import Schedule, ensure_session_removed
 from pydash import pick
 
 
@@ -16,14 +16,13 @@ def add_schedule():
         return reply(success=False, message='参数错误', error_code=const.code_param_err)
 
     schedule = {
-        'resource_id' = form.resource_id.data,
-        'court_id' = form.court_id.data,
-        'date' = form.date.data,
-        'total' = form.total.data,
-        'order_count' = form.order_count.data,
-        'occupied_count' = form.occupied_count.data,
-        'visible' = form.visible.data,
-        'enabled' = form.enabled.data,
+        'court_id': form.court_id.data,
+        'date': form.date.data,
+        'total': form.total.data,
+        'order_count': form.order_count.data,
+        'occupied_count': form.occupied_count.data,
+        'visible': form.visible.data,
+        'enabled': form.enabled.data,
         'record_status': const.record_normal,
     }
     res = utils.add_by_data(Schedule, schedule)
@@ -32,7 +31,7 @@ def add_schedule():
 
 @login_required_api
 @ensure_session_removed
-def delete_court_resource():
+def delete_schedule():
     form = DeleteByIdForm(request.form)
     if not form.validate():
         return reply(success=False, message='参数错误', error_code=const.code_param_err)
@@ -41,7 +40,7 @@ def delete_court_resource():
     return reply(success=res[0], message=res[1], error_code=res[2])
 
 @login_required_api
-def query_court_resource():
+def query_schedule():
     schedules = Schedule.query.order_by(
         Schedule.court_id
     ).filter_by(

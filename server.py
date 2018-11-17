@@ -53,16 +53,23 @@ def init():
     app.add_url_rule('/department/delete/', 'department_delete', view_func=api.delete_department, methods=['POST'])
     app.add_url_rule('/department/query/', 'department_query', view_func=api.query_department, methods=['GET'])
 
-    # court_resource
-    app.add_url_rule('/court_resource/add/', 'add_court_resource', view_func=api.add_court_resource, methods=['POST'])
-    app.add_url_rule('/court_resource/delete/', 'delete_court_resource', view_func=api.delete_court_resource, methods=['POST'])
-    app.add_url_rule('/court_resource/query/', 'query_court_resource', view_func=api.query_court_resource, methods=['POST'])
-
     # time
     app.add_url_rule('/period_data/add/', 'add_period_data', view_func=api.add_period_data, methods=['POST'])
     app.add_url_rule('/period_data/delete/', 'delete_period_data', view_func=api.delete_period_data, methods=['POST'])
     # app.add_url_rule('/period_data/query/', 'query_period_data', view_func=api.query_period_data, methods=['POST'])
     app.add_url_rule('/period_data/query/', 'query_period_data', view_func=api.query_period_data, methods=['GET'])
+
+    # court_resource
+    app.add_url_rule('/court_resource/add/', 'add_court_resource', view_func=api.add_court_resource, methods=['POST'])
+    app.add_url_rule('/court_resource/delete/', 'delete_court_resource', view_func=api.delete_court_resource, methods=['POST'])
+    # app.add_url_rule('/court_resource/delete/', 'delete_court_resource', view_func=api.delete_court_resource, methods=['POST'])
+    app.add_url_rule('/court_resource/query/', 'query_court_resource', view_func=api.query_court_resource, methods=['GET'])
+
+    # court_resource
+    app.add_url_rule('/schedule/add/', 'add_schedule', view_func=api.add_schedule, methods=['POST'])
+    app.add_url_rule('/schedule/delete/', 'delete_schedule', view_func=api.delete_schedule, methods=['POST'])
+    # app.add_url_rule('/schedule/delete/', 'delete_schedule', view_func=api.delete_schedule, methods=['POST'])
+    app.add_url_rule('/schedule/query/', 'query_schedule', view_func=api.query_schedule, methods=['GET'])
 
     # gym
     app.add_url_rule('/gym/add/', 'gym_add', view_func=api.gym_add, methods=['POST'])
