@@ -151,7 +151,7 @@ class PeriodData(db.Model, MySQLMixin):
 class Schedule(db.Model, MySQLMixin):
     id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
     court_id = db.Column(BIGINT(unsigned=True), default=0)
-    date = db.Column(DATETIME, datetime.now())
+    date = db.Column(DATETIME, default=datetime.now())
     total = db.Column(INTEGER(unsigned=True), default=0)
     ordered_count = db.Column(INTEGER(unsigned=True), default=0)
     occupied_count = db.Column(INTEGER(unsigned=True), default=0)
