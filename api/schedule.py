@@ -5,8 +5,6 @@ from flask import request
 from common import const, utils
 from common.response import reply
 from models import Schedule, ensure_session_removed
-from pydash import pick
-
 
 @login_required_api
 @ensure_session_removed
@@ -23,7 +21,6 @@ def add_schedule():
         'occupied_count': form.occupied_count.data,
         'visible': form.visible.data,
         'enabled': form.enabled.data,
-        'record_status': const.record_normal,
     }
     res = utils.add_by_data(Schedule, schedule)
     return reply(success=res[0], message=res[1], error_code=res[2])

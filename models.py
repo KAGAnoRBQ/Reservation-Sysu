@@ -133,53 +133,6 @@ class PeriodClass(db.Model, MySQLMixin):
             del _dict["_sa_instance_state"]
         return _dict
 
-
-class PeriodData(db.Model, MySQLMixin):
-    id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
-    period_class_id = db.Column(BIGINT(unsigned=True), default=0)
-    start_time = db.Column(DATETIME, default=datetime.now())
-    end_time = db.Column(DATETIME, default=datetime.now())
-
-    def to_json(self):
-        _dict = self.__dict__
-        if "_sa_instance_state" in _dict:
-            del _dict["_sa_instance_state"]
-        return _dict
-
-
-class Schedule(db.Model, MySQLMixin):
-    id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
-    court_id = db.Column(BIGINT(unsigned=True), default=0)
-    date = db.Column(DATETIME, default=datetime.now())
-    total = db.Column(INTEGER(unsigned=True), default=0)
-    ordered_count = db.Column(INTEGER(unsigned=True), default=0)
-    occupied_count = db.Column(INTEGER(unsigned=True), default=0)
-    visible = db.Column(BOOLEAN, default=False)
-    enabled = db.Column(BOOLEAN, default=True)
-
-    def to_json(self):
-        _dict = self.__dict__
-        if "_sa_instance_state" in _dict:
-            del _dict["_sa_instance_state"]
-        return _dict
-
-
-class CourtResource(db.Model, MySQLMixin):
-    id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
-    date = db.Column(DATETIME, default=datetime.now())
-    period_id = db.Column(BIGINT(unsigned=True), default=0)
-    court_id = db.Column(BIGINT(unsigned=True), default=0)
-    court_number = db.Column(BIGINT(unsigned=True), default=0)
-    occupied = db.Column(BOOLEAN, default=False)
-    max_order_count = db.Column(INTEGER, default=0)
-
-    def to_json(self):
-        _dict = self.__dict__
-        if "_sa_instance_state" in _dict:
-            del _dict["_sa_instance_state"]
-        return _dict
-
-
 class CourtOrder(db.Model, MySQLMixin):
     id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
     user_id = db.Column(BIGINT(unsigned=True), default=0)
@@ -302,8 +255,8 @@ class CourtResource(db.Model, MySQLMixin):
     period_id = db.Column(BIGINT(unsigned=True), default=0)
     court_id = db.Column(BIGINT(unsigned=True), default=0)
     court_number = db.Column(BIGINT(unsigned=True), default=0)
-    occupied = db.Column(BOOLEAN, default=False)
-    max_order_court = db.Column(BIGINT(unsigned=True), default=0)
+    occupied = db.Column(TINYINT(unsigned=True), default=0)
+    max_order_count = db.Column(BIGINT(unsigned=True), default=0)
     order_count = db.Column(BIGINT(unsigned=True), default=0)
     create_time = db.Column(DATETIME, default=datetime.now)
     update_time = db.Column(DATETIME, default=datetime.now)
@@ -322,8 +275,8 @@ class Schedule(db.Model, MySQLMixin):
     total = db.Column(BIGINT(unsigned=True), default=0)
     order_count = db.Column(BIGINT(unsigned=True), default=0)
     occupied_count = db.Column(BIGINT(unsigned=True), default=0)
-    visible = db.Column(BOOLEAN, default=False)
-    enabled = db.Column(BOOLEAN, default=False)
+    visible = db.Column(TINYINT(unsigned=True), default=0)
+    enabled = db.Column(TINYINT(unsigned=True), default=0)
     create_time = db.Column(DATETIME, default=datetime.now)
     update_time = db.Column(DATETIME, default=datetime.now)
     record_status = db.Column(TINYINT(unsigned=True), default=0)
