@@ -138,8 +138,8 @@ class PeriodClass(db.Model, MySQLMixin):
 class PeriodData(db.Model, MySQLMixin):
     id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
     period_class_id = db.Column(BIGINT(unsigned=True), default=0)
-    start_time = db.Column(DATETIME, default=datetime.now())
-    end_time = db.Column(DATETIME, default=datetime.now())
+    start_time = db.Column(db.TIME, default=0)
+    end_time = db.Column(db.TIME, default=0)
 
     def to_json(self):
         _dict = self.__dict__
@@ -188,10 +188,10 @@ class CourtOrder(db.Model, MySQLMixin):
     resource_id = db.Column(BIGINT(unsigned=True), default=0)
     pay_time = db.Column(DATETIME, default=datetime.now())
     amount = db.Column(INTEGER(unsigned=True), default=0)
-    is_ackd = db.Column(BOOLEAN, default=False)
+    is_acked = db.Column(BOOLEAN, default=False)
     ack_time = db.Column(DATETIME, default=datetime.now())
     is_canceled = db.Column(BOOLEAN, default=False)
-    cancel_time = db.Column(BOOLEAN, default=datetime.now())
+    cancel_time = db.Column(DATETIME, default=datetime.now())
     is_used = db.Column(BOOLEAN, default=False)
 
     def to_json(self):
