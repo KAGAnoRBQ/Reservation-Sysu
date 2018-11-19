@@ -4,7 +4,7 @@ from werkzeug.utils import import_string
 
 class Config(dict):
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+        super(Config, self).__init__(*args, **kwargs)
 
     def from_object(self, obj):
         if isinstance(obj, string_types):

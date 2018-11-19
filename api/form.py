@@ -1,3 +1,4 @@
+# coding: utf-8
 import wtforms
 
 from wtforms.validators import *
@@ -54,8 +55,35 @@ class QueryGymForm(wtforms.Form):
     manager_number = wtforms.StringField()
 
 
+class QueryDefaultForm(wtforms.Form):
+    page = wtforms.IntegerField()
+    limit = wtforms.IntegerField()
+
 class EditGymForm(wtforms.Form):
     id = wtforms.StringField(validators=[DataRequired()])
     gym_name = wtforms.StringField()
     location = wtforms.StringField()
     manager_number = wtforms.StringField()
+
+class AddPeriodData(wtforms.Form):
+    period_class_id = wtforms.StringField(validators=[DataRequired()])
+    start_time = wtforms.DateTimeField(validators=[DataRequired()])
+    end_time = wtforms.DateTimeField(validators=[DataRequired()])
+
+class AddCourtResource(wtforms.Form):
+    date = wtforms.DateTimeField(validators=[DataRequired()])
+    period_id = wtforms.StringField(validators=[DataRequired()])
+    court_id = wtforms.StringField(validators=[DataRequired()])
+    court_number = wtforms.StringField(validators=[DataRequired()])
+    occupied = wtforms.StringField(validators=[DataRequired()])
+    max_order_count = wtforms.StringField(validators=[DataRequired()])
+    order_count = wtforms.StringField(validators=[DataRequired()])
+
+class AddShcedule(wtforms.Form):
+    court_id = wtforms.StringField(validators=[DataRequired()])
+    date = wtforms.DateTimeField(validators=[DataRequired()])
+    total = wtforms.StringField(validators=[DataRequired()])
+    order_count = wtforms.StringField(validators=[DataRequired()])
+    occupied_count = wtforms.StringField(validators=[DataRequired()])
+    visible = wtforms.StringField(validators=[DataRequired()])
+    enabled = wtforms.StringField(validators=[DataRequired()])
