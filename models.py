@@ -1,3 +1,4 @@
+# coding: utf-8
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.mysql import (
     BIGINT, VARCHAR, DATETIME, BOOLEAN, TINYINT, TEXT, DATE, TIME
@@ -84,7 +85,6 @@ class Department(db.Model, MySQLMixin):
         _dict = self.__dict__
         if "_sa_instance_state" in _dict:
             del _dict["_sa_instance_state"]
-        return _dict
 
 
 class Device(db.Model, MySQLMixin):
@@ -163,7 +163,7 @@ class PeriodClass(db.Model, MySQLMixin):
 # 时间段数据，作为上面的时间段类型的具体数据的描述，比如时间段的起始时间、结束时间等
 class PeriodData(db.Model, MySQLMixin):
     id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
-    period_class_id = db.Column(BIGINT(unsigned=True), db.ForeignKey(PeriodClass.id), nullable=False)
+    period_class_id = db.Column(BIGINT(unsigned=True), nullable=False)
     start_time = db.Column(TIME, nullable=False)
     end_time = db.Column(TIME, nullable=False)
 
@@ -187,7 +187,7 @@ class CourtResource(db.Model, MySQLMixin):
     id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
     date = db.Column(DATE, nullable=False)
     period_id = db.Column(BIGINT(unsigned=True), nullable=False)
-    court_id = db.Column(BIGINT(unsigned=True), db.ForeignKey(Court.id), nullable=False)
+    court_id = db.Column(BIGINT(unsigned=True),  nullable=False)
     court_number = db.Column(BIGINT(unsigned=True), nullable=False)
     occupied = db.Column(TINYINT(unsigned=True), nullable=False)
     max_order_count = db.Column(BIGINT(unsigned=True), nullable=False)
@@ -197,7 +197,7 @@ class CourtResource(db.Model, MySQLMixin):
 # schedule: 用于描述某种场地，比如羽毛球场地，在某天被订场的数量，占场的数量
 class Schedule(db.Model, MySQLMixin):
     id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
-    court_id = db.Column(BIGINT(unsigned=True), db.ForeignKey(Court.id), nullable=False)
+    court_id = db.Column(BIGINT(unsigned=True), nullable=False)
     date = db.Column(DATE, nullable=False)
     total = db.Column(BIGINT(unsigned=True), nullable=False)
     ordered_count = db.Column(BIGINT(unsigned=True), nullable=False)
@@ -208,26 +208,27 @@ class Schedule(db.Model, MySQLMixin):
 
 class CourtOrder(db.Model, MySQLMixin):
     id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
-    user_id = db.Column(BIGINT(unsigned=True), db.ForeignKey(UserInfo.id), nullable=False)
+    user_id = db.Column(BIGINT(unsigned=True), nullable=False)
     order_time = db.Column(DATETIME, default=datetime.now())
-    resource_id = db.Column(BIGINT(unsigned=True), db.ForeignKey(CourtResource.id), nullable=False)
+    resource_id = db.Column(BIGINT(unsigned=True), nullable=False)
     pay_time = db.Column(DATETIME, default=datetime.now())
     amount = db.Column(BIGINT(unsigned=True), nullable=False)
     is_ackd = db.Column(TINYINT(unsigned=True), default=0)
     ack_time = db.Column(DATETIME, default=datetime.now())
     is_canceled = db.Column(TINYINT(unsigned=True), default=0)
+    # is_paid = db.Column(TINYINT(unsigned=True), default=0)  # 新增字段表示当前表单是否已经付款
     cancel_time = db.Column(DATETIME, default=datetime.now())
     is_used = db.Column(TINYINT(unsigned=True), default=0)
-    record_status = db.Column(TINYINT(unsigned=True), default=0)
-    create_time = db.Column(DATETIME, default=datetime.now)
-    update_time = db.Column(DATETIME, default=datetime.now)
+    # record_status = db.Column(TINYINT(unsigned=True), default=0)
+    # create_time = db.Column(DATETIME, default=datetime.now)
+    # update_time = db.Column(DATETIME, default=datetime.now)
 
 
 # account: 财务账户
 class Account(db.Model, MySQLMixin):
     id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
-    user_id = db.Column(BIGINT(unsigned=True), db.ForeignKey(UserInfo.id), nullable=False)
-    order_id = db.Column(BIGINT(unsigned=True), db.ForeignKey(CourtOrder.id), nullable=False)
+    user_id = db.Column(BIGINT(unsigned=True), nullable=False)
+    order_id = db.Column(BIGINT(unsigned=True), nullable=False)
     account_summary = db.Column(VARCHAR(64), nullable=True)
     account_time = db.Column(DATETIME, nullable=False)
     amount = db.Column(BIGINT, nullable=False)

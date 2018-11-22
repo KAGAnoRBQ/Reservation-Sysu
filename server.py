@@ -1,3 +1,4 @@
+# coding: utf-8
 from flask import render_template
 from werkzeug.wsgi import DispatcherMiddleware
 from app import app
@@ -21,15 +22,19 @@ class IndexRule(Rule):
 def init():
     db.init_app(app)
 
-    db.app = app
-    db.create_all()
+    # db.app = app
+    # db.create_all()
 
     def __(_, resp):
         resp('404 Not Found', [('Content-Type', 'text/plain')])
         return [b'Not Found']
 
-    @login_required_api
+    # @login_required_api
     def index():
+        search = UserInfo.query.filter_by(
+            id='16'
+        ).first()
+        print(search.user_name)
         return render_template('index.html')
 
     app.wsgi_app = DispatcherMiddleware(__, {'/api': app.wsgi_app})
@@ -50,9 +55,13 @@ def init():
     app.add_url_rule('/department/query/', 'department_query', view_func=api.query_department, methods=['GET'])
 
     # booking
+    app.add_url_rule('/pay/pay_money/', 'money_pay', view_func=api.pay_money, methods=['POST'])
+    app.add_url_rule('/order/cancel/', 'order_cancel', view_func=api.cancel_order, methods=['POST'])
+    app.add_url_rule('/order/get_info/', 'info_get', view_func=api.get_order_info, methods=['GET'])
+    app.add_url_rule('/mytest/', 'mytest', view_func=api.mytest, methods=['GET'])
 
 
 init()
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080, debug=True)
+    app.run(debug=True)  # host='0.0.0.0', port=8080, debug=True)

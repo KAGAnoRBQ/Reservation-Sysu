@@ -1,3 +1,4 @@
+# coding: utf-8
 from models import db, UserInfo
 from common.views import login_required
 

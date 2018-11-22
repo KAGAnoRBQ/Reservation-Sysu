@@ -20,7 +20,7 @@ class RegexConverter(BaseConverter):
 
 class ServerFlask(Flask):
     def __init__(self, name, *args, **kwargs):
-        super().__init__(name, *args, **kwargs)
+        super(ServerFlask, self).__init__(name, *args, **kwargs)
         self.config.from_mapping(config)
 
     def make_response(self, rv):
