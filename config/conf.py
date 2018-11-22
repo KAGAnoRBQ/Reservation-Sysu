@@ -3,6 +3,7 @@ SQLALCHEMY_ECHO = False
 SQLALCHEMY_POOL_RECYCLE = 30
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 SQLALCHEMY_COMMIT_ON_TEARDOWN = False
+
 # SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:ci@127.0.0.1:3306/reservation?charset=utf8mb4'
 SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:123456@localhost:3306/barron?charset=utf8mb4'
 

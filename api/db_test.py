@@ -3,13 +3,12 @@ from models import db, UserInfo
 from common.views import login_required
 
 
-@login_required
+# @login_required
 def db_add():
     user_data = {
-        'id': 23,
-        'name': 'test',
-        'username': 'root',
-        'password': '123456'
+        'id': 10,
+        'user_name': 'test_name',
+        'password': 'test'
     }
     user_info = UserInfo(**user_data)
     db.session.add(user_info)

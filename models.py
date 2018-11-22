@@ -1,12 +1,13 @@
 # coding: utf-8
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.mysql import (
-    BIGINT, VARCHAR, DATETIME, BOOLEAN, TINYINT, TEXT, DATE, TIME
+    BIGINT, VARCHAR, DATETIME, BOOLEAN, TINYINT, TEXT, DATE, TIME, INTEGER
 )
 from flask_login import UserMixin
 import functools
 from datetime import datetime
 from common import const
+import logging
 
 db = SQLAlchemy()
 
@@ -25,8 +26,9 @@ def ensure_session_removed(func):
 def db_commit():
     try:
         db.session.commit()
-        return True, '', const.code_success
-    except:
+        return True, '操作成功', const.code_success
+    except Exception as exc:
+        logging.warning(exc)
         return False, '数据库操作失败', const.code_db_err
 
 
@@ -58,22 +60,6 @@ class UserInfo(db.Model, MySQLMixin, UserMixin):
         return _dict
 
 
-class Gym(db.Model, MySQLMixin):
-    id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
-    gym_name = db.Column(VARCHAR(255), nullable=False)
-    location = db.Column(VARCHAR(255), nullable=False)
-    manager_id = db.Column(BIGINT(unsigned=True), nullable=False)
-    record_status = db.Column(TINYINT(unsigned=True), default=0)
-    create_time = db.Column(DATETIME, default=datetime.now)
-    update_time = db.Column(DATETIME, default=datetime.now)
-
-    def to_json(self):
-        _dict = self.__dict__
-        if "_sa_instance_state" in _dict:
-            del _dict["_sa_instance_state"]
-        return _dict
-
-
 class Department(db.Model, MySQLMixin):
     id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
     dept_name = db.Column(VARCHAR(255), nullable=False)
@@ -85,6 +71,106 @@ class Department(db.Model, MySQLMixin):
         _dict = self.__dict__
         if "_sa_instance_state" in _dict:
             del _dict["_sa_instance_state"]
+        return _dict
+
+
+class Account(db.Model, MySQLMixin):
+    id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
+    user_id = db.Column(BIGINT(unsigned=True), default=0)
+    order_id = db.Column(BIGINT(unsigned=True), default=0)
+    account_summary = db.Column(VARCHAR(length=64), default="")
+    account_time = db.Column(DATETIME, default=datetime.now())
+    amount = db.Column(INTEGER, default=0)
+
+    def to_json(self):
+        _dict = self.__dict__
+        if "_sa_instance_state" in _dict:
+            del _dict["_sa_instance_state"]
+        return _dict
+
+
+class Gym(db.Model, MySQLMixin):
+    id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
+    gym_name = db.Column(VARCHAR(255), nullable=False)
+    location = db.Column(VARCHAR(255), nullable=False)
+    manager_number = db.Column(BIGINT(unsigned=True), nullable=False)
+    record_status = db.Column(TINYINT(unsigned=True), default=0)
+    create_time = db.Column(DATETIME, default=datetime.now)
+    update_time = db.Column(DATETIME, default=datetime.now)
+
+    def to_json(self):
+        _dict = self.__dict__
+        if "_sa_instance_state" in _dict:
+            del _dict["_sa_instance_state"]
+        return _dict
+
+
+class Court(db.Model, MySQLMixin):
+    id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
+    gym_id = db.Column(BIGINT(unsigned=True), default=0)
+    court_name = db.Column(VARCHAR(length=32), default="")
+    description = db.Column(db.TEXT, default="")
+    court_type = db.Column(TINYINT, default=0)
+    court_count = db.Column(INTEGER(unsigned=True), default=0)
+    max_order_count = db.Column(INTEGER(unsigned=True), default=1)
+    court_fee = db.Column(INTEGER(unsigned=True), default=0)
+    order_days = db.Column(INTEGER(unsigned=True), default=1)
+    period_class_id = db.Column(INTEGER(unsigned=True), default=0)
+
+    def to_json(self):
+        _dict = self.__dict__
+        if "_sa_instance_state" in _dict:
+            del _dict["_sa_instance_state"]
+
+
+class PeriodClass(db.Model, MySQLMixin):
+    id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
+    period_class_name = db.Column(VARCHAR(64), default="")
+    period_class_description = db.Column(VARCHAR(240), default="")
+
+    def to_json(self):
+        _dict = self.__dict__
+        if "_sa_instance_state" in _dict:
+            del _dict["_sa_instance_state"]
+        return _dict
+
+
+class CourtOrder(db.Model, MySQLMixin):
+    id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
+    user_id = db.Column(BIGINT(unsigned=True), default=0)
+    order_time = db.Column(DATETIME, default=datetime.now())
+    resource_id = db.Column(BIGINT(unsigned=True), default=0)
+    pay_time = db.Column(DATETIME, default=datetime.now())
+    amount = db.Column(INTEGER(unsigned=True), default=0)
+    is_acked = db.Column(BOOLEAN, default=False)
+    ack_time = db.Column(DATETIME, default=datetime.now())
+    is_canceled = db.Column(BOOLEAN, default=False)
+    cancel_time = db.Column(DATETIME, default=datetime.now())
+    is_used = db.Column(BOOLEAN, default=False)
+    update_time = db.Column(DATETIME, default=datetime.now())
+
+    def to_json(self):
+        _dict = self.__dict__
+        if "_sa_instance_state" in _dict:
+            del _dict["_sa_instance_state"]
+        return _dict
+
+
+class Option(db.Model, MySQLMixin):
+    id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
+    pre_days = db.Column(INTEGER(unsigned=True), default=0)
+    admin_pass = db.Column(VARCHAR(32))
+
+    def to_json(self):
+        _dict = self.__dict__
+        if "_sa_instance_state" in _dict:
+            del _dict["_sa_instance_state"]
+        return _dict
+
+
+#############################################################
+#                        分割线                             #
+#############################################################
 
 
 class Device(db.Model, MySQLMixin):
@@ -153,89 +239,60 @@ class Achievement(db.Model, MySQLMixin):
     update_time = db.Column(DATETIME, default=datetime.now)
 
 
-# period_class: 时间段类型，里面是可用时间段的名称和描述
-class PeriodClass(db.Model, MySQLMixin):
-    id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
-    period_class_name = db.Column(VARCHAR(64), nullable=False)
-    period_class_description = db.Column(VARCHAR(240), nullable=False)
-
-
 # 时间段数据，作为上面的时间段类型的具体数据的描述，比如时间段的起始时间、结束时间等
 class PeriodData(db.Model, MySQLMixin):
     id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
     period_class_id = db.Column(BIGINT(unsigned=True), nullable=False)
     start_time = db.Column(TIME, nullable=False)
     end_time = db.Column(TIME, nullable=False)
+    create_time = db.Column(DATETIME, default=datetime.now)
+    update_time = db.Column(DATETIME, default=datetime.now)
+    record_status = db.Column(TINYINT(unsigned=True), default=0)
 
-
-# Court类用来表示场地
-class Court(db.Model, MySQLMixin):
-    id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
-    gym_id = db.Column(BIGINT(unsigned=True), nullable=False)
-    court_name = db.Column(VARCHAR(32),nullable=False)
-    description = db.Column(TEXT, nullable=True)
-    court_type = db.Column(BIGINT(unsigned=True), nullable=False)
-    court_count = db.Column(BIGINT(unsigned=True), nullable=False)
-    max_order_count = db.Column(BIGINT(unsigned=True), nullable=False)
-    court_fee = db.Column(BIGINT(unsigned=True), nullable=False)
-    order_days = db.Column(BIGINT(unsigned=True), nullable=False)
-    period_class_id = db.Column(BIGINT(unsigned=True), nullable=False)
+    def to_json(self):
+        _dict = self.__dict__
+        if "_sa_instance_state" in _dict:
+            del _dict["_sa_instance_state"]
+        return _dict
 
 
 # court_resource 场地资源
 class CourtResource(db.Model, MySQLMixin):
     id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
-    date = db.Column(DATE, nullable=False)
-    period_id = db.Column(BIGINT(unsigned=True), nullable=False)
-    court_id = db.Column(BIGINT(unsigned=True),  nullable=False)
-    court_number = db.Column(BIGINT(unsigned=True), nullable=False)
-    occupied = db.Column(TINYINT(unsigned=True), nullable=False)
-    max_order_count = db.Column(BIGINT(unsigned=True), nullable=False)
-    order_count = db.Column(BIGINT(unsigned=True), nullable=False)
+    date = db.Column(DATETIME, default=datetime.now)
+    period_id = db.Column(BIGINT(unsigned=True), default=0)
+    court_id = db.Column(BIGINT(unsigned=True), default=0)
+    court_number = db.Column(BIGINT(unsigned=True), default=0)
+    occupied = db.Column(TINYINT(unsigned=True), default=0)
+    max_order_count = db.Column(BIGINT(unsigned=True), default=0)
+    order_count = db.Column(BIGINT(unsigned=True), default=0)
+    create_time = db.Column(DATETIME, default=datetime.now)
+    update_time = db.Column(DATETIME, default=datetime.now)
+    record_status = db.Column(TINYINT(unsigned=True), default=0)
+
+    def to_json(self):
+        _dict = self.__dict__
+        if "_sa_instance_state" in _dict:
+            del _dict["_sa_instance_state"]
+        return _dict
 
 
 # schedule: 用于描述某种场地，比如羽毛球场地，在某天被订场的数量，占场的数量
 class Schedule(db.Model, MySQLMixin):
     id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
-    court_id = db.Column(BIGINT(unsigned=True), nullable=False)
-    date = db.Column(DATE, nullable=False)
-    total = db.Column(BIGINT(unsigned=True), nullable=False)
-    ordered_count = db.Column(BIGINT(unsigned=True), nullable=False)
-    occupied_count = db.Column(BIGINT(unsigned=True), nullable=False)
+    court_id = db.Column(BIGINT(unsigned=True), default=0)
+    date = db.Column(DATETIME, default=datetime.now)
+    total = db.Column(BIGINT(unsigned=True), default=0)
+    order_count = db.Column(BIGINT(unsigned=True), default=0)
+    occupied_count = db.Column(BIGINT(unsigned=True), default=0)
     visible = db.Column(TINYINT(unsigned=True), default=0)
-    enabled = db.Column(TINYINT(unsigned=True), default=1)
+    enabled = db.Column(TINYINT(unsigned=True), default=0)
+    create_time = db.Column(DATETIME, default=datetime.now)
+    update_time = db.Column(DATETIME, default=datetime.now)
+    record_status = db.Column(TINYINT(unsigned=True), default=0)
 
-
-class CourtOrder(db.Model, MySQLMixin):
-    id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
-    user_id = db.Column(BIGINT(unsigned=True), nullable=False)
-    order_time = db.Column(DATETIME, default=datetime.now())
-    resource_id = db.Column(BIGINT(unsigned=True), nullable=False)
-    pay_time = db.Column(DATETIME, default=datetime.now())
-    amount = db.Column(BIGINT(unsigned=True), nullable=False)
-    is_ackd = db.Column(TINYINT(unsigned=True), default=0)
-    ack_time = db.Column(DATETIME, default=datetime.now())
-    is_canceled = db.Column(TINYINT(unsigned=True), default=0)
-    # is_paid = db.Column(TINYINT(unsigned=True), default=0)  # 新增字段表示当前表单是否已经付款
-    cancel_time = db.Column(DATETIME, default=datetime.now())
-    is_used = db.Column(TINYINT(unsigned=True), default=0)
-    # record_status = db.Column(TINYINT(unsigned=True), default=0)
-    # create_time = db.Column(DATETIME, default=datetime.now)
-    # update_time = db.Column(DATETIME, default=datetime.now)
-
-
-# account: 财务账户
-class Account(db.Model, MySQLMixin):
-    id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
-    user_id = db.Column(BIGINT(unsigned=True), nullable=False)
-    order_id = db.Column(BIGINT(unsigned=True), nullable=False)
-    account_summary = db.Column(VARCHAR(64), nullable=True)
-    account_time = db.Column(DATETIME, nullable=False)
-    amount = db.Column(BIGINT, nullable=False)
-
-
-# option
-class Option(db.Model, MySQLMixin):
-    id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
-    pre_days = db.Column(BIGINT(unsigned=True), nullable=False)
-    admin_pass = db.Column(VARCHAR(32), nullable=False)
+    def to_json(self):
+        _dict = self.__dict__
+        if "_sa_instance_state" in _dict:
+            del _dict["_sa_instance_state"]
+        return _dict

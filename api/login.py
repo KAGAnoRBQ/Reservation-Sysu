@@ -15,7 +15,7 @@ def login():
     if not form.validate():
         return param_error(form.errors)
     user = UserInfo.query.filter_by(
-        user_name=form.user_name.data,
+        user_number=form.user_number.data,
         record_status=const.record_normal
     ).first()
     if not user or user.password != form.password.data:

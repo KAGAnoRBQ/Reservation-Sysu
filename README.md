@@ -6,24 +6,25 @@
 3. id统一用bigint 不要使用bool 用tinyint 你以为真存一个位？ 后期加属性的时候 只有true和false很尴尬
 4. gym表的 manager字段改为manager_id（user_id）吧 用manager算什么嘛 名字？重名咋整？
 
-按照一下的sql来规范建表吧：
+按照一下的sql来规范建表吧： <br>
+参考 ./sql_create_table.sql <br>
 
-CREATE TABLE `user_info` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `user_name` varchar(255) NOT NULL DEFAULT '',
-  `user_alias` varchar(255) NOT NULL DEFAULT '',
-	`user_number` varchar(255) NOT NULL DEFAULT '',
-	`user_type` tinyint(1) unsigned NOT NULL DEFAULT 0,
-	`dept_id` bigint(20) unsigned NOT NULL DEFAULT 0,
-  `password` varchar(255) NOT NULL DEFAULT '',
-	`account_balance` bigint(20) unsigned NOT NULL DEFAULT 0,
-	`disabled` tinyint(1) unsigned NOT NULL DEFAULT 0,
-  `record_status` tinyint(1) unsigned NOT NULL DEFAULT 0,
-  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-	UNIQUE `uni_username`(`user_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
+关于 API 接口 <br>
+参照 first_group_api.docx 来写吧 <br>
 
-关于 API 接口
-参照 first_group_api.docx 来写吧
+
+分页设计： <br>
+    从url中传参 page(当前页数) limit（每页个数）<br>
+    example: api/xxxx/xxx/query/?page=xx&limit=xx <br>
+    返回 <br>
+    { <br>
+        "data": [],  //查询的数据 <br>
+        "error_code": 0, <br>
+        "message": "done", <br>
+        "paging": { <br>
+            "current": 1,  // 当前页 <br>
+            "pages": 10,   // 总页数 <br>
+            "records": 0   // 总记录数 <br>
+        }, <br>
+        "success": true <br>
+    } <br>
