@@ -109,3 +109,11 @@ class AddShcedule(wtforms.Form):
     visible = wtforms.BooleanField()
     enabled = wtforms.BooleanField()
 
+
+class PayOrder(wtforms.Form):
+    order_id = wtforms.StringField(validators=[DataRequired()])
+
+
+class CancelOrder(wtforms.Form):
+    cancel_order_id = wtforms.StringField(validators=[DataRequired()])
+

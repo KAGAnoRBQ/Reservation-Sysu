@@ -16,7 +16,7 @@ def add_schedule():
         return reply(success=False, message='参数错误', error_code=const.code_param_err)
 
     schedule = {
-        'resource_id' = form.resource_id.data,
+        'resource_id' : form.resource_id.data,
         'court_id' = form.court_id.data,
         'date' = form.date.data,
         'total' = form.total.data,
