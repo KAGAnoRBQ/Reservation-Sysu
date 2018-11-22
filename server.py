@@ -62,13 +62,11 @@ def init():
     app.add_url_rule('/department/delete/', 'department_delete', view_func=api.delete_department, methods=['POST'])
     app.add_url_rule('/department/query/', 'department_query', view_func=api.query_department, methods=['GET'])
 
-<<<<<<< HEAD
     # booking
     app.add_url_rule('/pay/pay_money/', 'money_pay', view_func=api.pay_money, methods=['POST'])
     app.add_url_rule('/order/cancel/', 'order_cancel', view_func=api.cancel_order, methods=['POST'])
     app.add_url_rule('/order/get_info/', 'info_get', view_func=api.get_order_info, methods=['GET'])
     app.add_url_rule('/mytest/', 'mytest', view_func=api.mytest, methods=['GET'])
-=======
     # time
     app.add_url_rule('/period_data/add/', 'add_period_data', view_func=api.add_period_data, methods=['POST'])
     app.add_url_rule('/period_data/delete/', 'delete_period_data', view_func=api.delete_period_data, methods=['POST'])
@@ -95,7 +93,6 @@ def init():
     app.add_url_rule('/order/user_query/', 'order_user_query', view_func=api.order_user_query, methods=['GET'])
     app.add_url_rule('/order/manager_query/', 'order_manager_query', view_func=api.order_manager_query, methods=['GET'])
     app.add_url_rule('/order/cancel/', 'order_cancel', view_func=api.order_cancel, methods=['POST'])
->>>>>>> upstream/master
 
     # account
     app.add_url_rule('/account/user_query/', 'account_user_query', view_func=api.account_user_query, methods=['GET'])
@@ -106,8 +103,5 @@ def init():
 init()
 
 if __name__ == '__main__':
-<<<<<<< HEAD
     app.run(debug=True)  # host='0.0.0.0', port=8080, debug=True)
-=======
-    app.run(host='0.0.0.0', port=5000, debug=True)
->>>>>>> upstream/master
+
