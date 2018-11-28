@@ -43,16 +43,15 @@ def get_user_order(order):
 
 def get_manager_order(order):
     user = UserInfo.query.filter(UserInfo.id == order.user_id).first()
-    dept = Department.query.filter(Department.id == user.dept_id).first()
     court_resource = CourtResource.query.filter(CourtResource.id == order.resource_id).first()
     court = Court.query.filter(Court.id == court_resource.court_id).first()
     period_data = PeriodData.query.filter(PeriodData.id == court_resource.period_id).first()
     gym = Gym.query.filter(Gym.id == court.gym_id).first()
     item = {
         'order_id': order.id,
-        'dept_id': dept.id,
+        'dept_id': user.dept_id,
         'user_name': user.user_name,
-        'user_nmuber': user.user_number,
+        'user_number': user.user_number,
         'gym_name': gym.gym_name,
         'court_name': court.court_name,
         'order_time': order.order_time,
@@ -115,7 +114,6 @@ def order_manager_query():
                            'records': total_count,
                        },
                        message='done', error_code=const.code_success)
-
 
 
 @login_required_api
