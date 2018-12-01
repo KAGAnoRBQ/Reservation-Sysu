@@ -1,7 +1,7 @@
 # coding: utf-8
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.mysql import (
-    BIGINT, VARCHAR, DATETIME, BOOLEAN, TINYINT, INTEGER
+    BIGINT, VARCHAR, DATETIME, BOOLEAN, TINYINT, INTEGER, TIME
 )
 from flask_login import UserMixin
 import functools
@@ -241,8 +241,8 @@ class Achievement(db.Model, MySQLMixin):
 class PeriodData(db.Model, MySQLMixin):
     id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
     period_class_id = db.Column(BIGINT(unsigned=True), default=0)
-    start_time = db.Column(DATETIME, default=datetime.now)
-    end_time = db.Column(DATETIME, default=datetime.now)
+    start_time = db.Column(TIME, nullable=False)
+    end_time = db.Column(TIME, nullable=False)
     create_time = db.Column(DATETIME, default=datetime.now)
     update_time = db.Column(DATETIME, default=datetime.now)
     record_status = db.Column(TINYINT(unsigned=True), default=0)
