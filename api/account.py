@@ -82,7 +82,7 @@ def account_manager_query():
 @ensure_session_removed
 def account_deposit():
     user_ids = request.json.get('user_ids')
-    amount = request.json.get('amount')
+    amount = (int)(request.json.get('amount'))
     users = UserInfo.query.filter(UserInfo.id.in_(user_ids), UserInfo.record_status == const.record_normal).all()
 
     for user in users:
