@@ -44,6 +44,7 @@ def init():
     # login
     app.add_url_rule('/user/login/', 'user_login', view_func=api.login, methods=['POST'])
     app.add_url_rule('/user/login_out/', 'user_login_out', view_func=api.login_out, methods=['POST'])
+    
     # user
     app.add_url_rule('/user/register/', 'user_register', view_func=api.register, methods=['POST'])
     app.add_url_rule('/user/query/', 'user_query', view_func=api.query_user, methods=['POST'])
@@ -51,7 +52,8 @@ def init():
                      methods=['POST'])
     app.add_url_rule('/user/disable/change/', 'user_disable_change', view_func=api.change_disable,
                      methods=['POST'])
-
+    app.add_url_rule('/user/query2/', 'user_query2', view_func=api.query_user2, methods=['GET'])
+    
     # department
     app.add_url_rule('/department/add/', 'department_add', view_func=api.add_department, methods=['POST'])
     app.add_url_rule('/department/delete/', 'department_delete', view_func=api.delete_department, methods=['POST'])
@@ -61,7 +63,7 @@ def init():
     app.add_url_rule('/period_data/add/', 'add_period_data', view_func=api.add_period_data, methods=['POST'])
     app.add_url_rule('/period_data/delete/', 'delete_period_data', view_func=api.delete_period_data, methods=['POST'])
     app.add_url_rule('/period_data/query/', 'query_period_data', view_func=api.query_period_data, methods=['POST'])
-
+    
     # court_resource
     app.add_url_rule('/court_resource/add/', 'add_court_resource', view_func=api.add_court_resource, methods=['POST'])
     app.add_url_rule('/court_resource/delete/', 'delete_court_resource', view_func=api.delete_court_resource,
