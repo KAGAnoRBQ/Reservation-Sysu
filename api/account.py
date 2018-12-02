@@ -14,7 +14,7 @@ import logging
 
 def get_user_account(account):
     item = {
-        'acccount_time': account.account_time,
+        'account_time': account.account_time,
         'order_id': account.order_id,
         'account_summary': account.account_summary,
         'amount': account.amount,
@@ -29,7 +29,7 @@ def get_manager_account(account):
     item = {
         'user_name': user.user_name,
         'user_number': user.user_number,
-        'acccount_time': account.account_time,
+        'account_time': account.account_time,
         'order_id': account.order_id,
         'account_summary': account.account_summary,
         'amount': account.amount,
