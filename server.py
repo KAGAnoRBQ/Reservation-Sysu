@@ -91,7 +91,8 @@ def init():
     app.add_url_rule('/account/manager_query/', 'account_manager_query', view_func=api.account_manager_query, methods=['GET'])
     app.add_url_rule('/account/deposit/', 'account_deposit', view_func=api.account_deposit, methods=['POST'])
     app.add_url_rule('/account/query_balance/', 'account_query_balance', view_func=api.account_query_balance, methods=['GET'])
-
+    app.add_url_rule('/account/clear/', 'account_clear', view_func=api.account_clear_balance, methods=['POST'])
+    
     #fields
     app.add_url_rule('/sportsfield/define/', 'sportsfield_field_define', view_func=api.sportsfield_define, methods=['GET'])
     app.add_url_rule('/sportsfield/add/', 'sportsfield_field_add', view_func=api.sportsfield_add, methods=['POST'])
