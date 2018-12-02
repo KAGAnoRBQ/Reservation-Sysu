@@ -21,6 +21,8 @@ class IndexRule(Rule):
 
 def init():
     db.init_app(app)
+    db.app = app
+    db.create_all()
 
     def __(_, resp):
         resp('404 Not Found', [('Content-Type', 'text/plain')])
@@ -88,7 +90,19 @@ def init():
     app.add_url_rule('/account/deposit/', 'account_deposit', view_func=api.account_deposit, methods=['POST'])
     app.add_url_rule('/account/query_balance/', 'account_query_balance', view_func=api.account_query_balance, methods=['GET'])
 
+    #fields
+    app.add_url_rule('/sportsfield/define/', 'sportsfield_field_define', view_func=api.sportsfield_define, methods=['GET'])
+    app.add_url_rule('/sportsfield/add/', 'sportsfield_field_add', view_func=api.sportsfield_add, methods=['POST'])
+    app.add_url_rule('/sportsfield/edit', 'sportsfield_field_edit', view_func=api.sportsfield_edit,methods=['POST'])
+    app.add_url_rule('/sportsfield/typequery','sportsfield_court_type_query',view_func=api.court_type_query,methods=['GET'])
+    app.add_url_rule('/sportsfield/delete','sportsfield_delete',view_func=api.sportsfield_delete,methods=['GET'])
+
+    #time
+    app.add_url_rule('/period/period_query', 'period_period_query', view_func=api.period_query,methods=['GET'])
+    app.add_url_rule('/peroid/period_add', 'period_period_add', view_func=api.period_add,methods=['POST'])
+    app.add_url_rule('/peroid/peroid_edit', 'period_period_edit', view_func=api.period_edit,methods=['POST'])
+    app.add_url_rule('/peroid/period_delete', 'period_delete', view_func=api.period_delete,methods=['GET'])
 init()
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='127.0.0.1', port=5000, debug=True)

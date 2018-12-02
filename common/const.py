@@ -27,3 +27,8 @@ user_type_normal = 3
 
 user_disabled_false = 0
 user_disabled_true = 1
+
+#sportsfield
+current_gym_default = 0
+current_court_default = 0
+current_period_class_default = 0

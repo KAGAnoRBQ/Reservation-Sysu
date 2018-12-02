@@ -116,6 +116,8 @@ class Court(db.Model, MySQLMixin):
     court_fee = db.Column(INTEGER(unsigned=True), default=0)
     order_days = db.Column(INTEGER(unsigned=True), default=1)
     period_class_id = db.Column(INTEGER(unsigned=True), default=0)
+    record_status = db.Column(TINYINT(unsigned=True), default=0)
+    update_time = db.Column(DATETIME, default=datetime.now)
 
     def to_json(self):
         _dict = self.__dict__
@@ -127,6 +129,8 @@ class PeriodClass(db.Model, MySQLMixin):
     id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
     period_class_name = db.Column(VARCHAR(64), default="")
     period_class_description = db.Column(VARCHAR(240), default="")
+    update_time = db.Column(DATETIME, default=datetime.now())
+    record_status = db.Column(TINYINT(unsigned=True), default=0)
 
     def to_json(self):
         _dict = self.__dict__
@@ -287,6 +291,16 @@ class Schedule(db.Model, MySQLMixin):
     update_time = db.Column(DATETIME, default=datetime.now)
     record_status = db.Column(TINYINT(unsigned=True), default=0)
 
+    def to_json(self):
+        _dict = self.__dict__
+        if "_sa_instance_state" in _dict:
+            del _dict["_sa_instance_state"]
+        return _dict
+
+class CourtType(db.Model,MySQLMixin):
+    id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
+    court_type_name = db.Column(VARCHAR(64), nullable=False)
+    court_type_description = db.Column(db.TEXT, default="")
     def to_json(self):
         _dict = self.__dict__
         if "_sa_instance_state" in _dict:
