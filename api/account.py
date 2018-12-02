@@ -96,6 +96,19 @@ def account_deposit():
 
 
 @login_required_api
+def account_clear_balance():
+    user_ids = request.json.get('user_ids')
+    users = UserInfo.query.filter(UserInfo.id.in_(user_ids), UserInfo.record_status == const.record_normal).all()
+    for user in users:
+        user.update_time = datetime.now()
+        account = Account(user_id=user.id, order_id=0, account_summary='清零', account_time=datetime.now(), amount=user.account_balance)
+        user.account_balance = 0
+        db.session.add(account)
+    res = db_commit()
+    return reply(success=res[0], message=res[1], error_code=res[2])
+
+
+@login_required_api
 def account_query_balance():
     user_id = request.args.get('user_id', current_user.id)
 
