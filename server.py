@@ -70,7 +70,6 @@ def init():
     app.add_url_rule('/pay/pay_money/', 'money_pay', view_func=api.pay_money, methods=['POST'])
     app.add_url_rule('/my_order/cancel/', 'order_cancel_button', view_func=api.order_cancel_button, methods=['POST'])
     app.add_url_rule('/order/get_info/', 'info_get', view_func=api.get_order_info, methods=['GET'])
-    app.add_url_rule('/mytest/', 'mytest', view_func=api.mytest, methods=['GET'])
     # time
     app.add_url_rule('/period_data/add/', 'add_period_data', view_func=api.add_period_data, methods=['POST'])
     app.add_url_rule('/period_data/delete/', 'delete_period_data', view_func=api.delete_period_data, methods=['POST'])

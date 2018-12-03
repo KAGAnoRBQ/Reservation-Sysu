@@ -21,8 +21,8 @@ error_code description:
 '''
 
 
-# @login_required_api
-# @ensure_session_removed
+@login_required_api
+@ensure_session_removed
 def pay_money():
     # Method: Post
     # The parameter received from the user's form is order's id
@@ -113,8 +113,8 @@ error_code description:
 '''
 
 
-# @login_required_api
-# @ensure_session_removed
+@login_required_api
+@ensure_session_removed
 def order_cancel_button():
     # Method: post
     form = CancelOrder(request.form)
@@ -244,71 +244,3 @@ def get_order_info():
     }
 
     return reply(success=True, data=data, message="")
-
-
-# @login_required_api
-def mytest():
-    resource_data = {
-        'id': 1,
-        'date': datetime.now(),
-        'period_id': 1,
-        'court_id': 1,
-        'court_number': 123,
-        'occupied': 0,
-        'max_order_count': 30,
-        'order_count': 20
-    }
-    court_data = {
-        'id': 1,
-        'gym_id': 1,
-        'court_name': 'Swimming Pool',
-        'description': 'This is a cool swimming pool',
-        'court_type': 1,
-        'court_count': 100,
-        'max_order_count': 20,
-        'court_fee': 10,
-        'order_days': 3,
-        'period_class_id': 1
-    }
-    period_data = {
-        'id': 1,
-        'period_class_id': 1,
-        'start_time': time.strftime("%H:%M:%S", time.localtime()),
-        'end_time': '19:40:00'
-    }
-    gym_info = {
-        'id': 1,
-        'gym_name': '东校体育馆',
-        'location': '中山大学东校区',
-        'manager_number': 123
-    }
-
-
-    counter = 1
-    mid = 8
-    while counter <= 9:
-        order_data = {
-            'id': random.randint(3847, 4384230),
-            'user_id': mid,
-            'order_time': datetime.now(),
-            'resource_id': 1,
-            'amount': 0,
-            'is_canceled': 0,
-            'is_used': 0
-        }
-        mid = mid + 1
-        counter = counter + 1
-        record = CourtOrder(**order_data)
-        db.session.add(record)
-
-    db.session.commit()
-
-    '''
-    user_order = CourtOrder.query.filter_by(
-        id=123456
-    )  # 找到了问题的症结所在：加了.first()之后不能用于update, 没加了的话不能用来取属性
-    print(user_order.user_id)
-    '''
-
-    #res = add_by_data(CourtResource, resource_data)
-    return reply( message="你好棒")
