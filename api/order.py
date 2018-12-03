@@ -131,7 +131,11 @@ def order_cancel():
         return reply(success=False, message='订单已取消', error_code=const.code_param_illegal)
     if order_rel.is_acked or order_rel.is_used:
         return reply(success=False, message='订单已生效，无法取消', error_code=const.code_param_illegal)
-
+    account = Account(user_id=order_rel.user_id, order_id=order_id, account_summary='退款', account_time=datetime.now(),
+                      amount=order_rel.amount)
+    db.session.add(account)
+    users = UserInfo.query.filter_by(id=order_rel.user_id).first()
+    users.account_balance += order_rel.amount
     update_data = {
         'is_canceled': 1,
         'cancel_time': datetime.now()
