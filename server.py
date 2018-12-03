@@ -64,7 +64,7 @@ def init():
 
     # booking
     app.add_url_rule('/pay/pay_money/', 'money_pay', view_func=api.pay_money, methods=['POST'])
-    app.add_url_rule('/order/cancel/', 'order_cancel', view_func=api.cancel_order, methods=['POST'])
+    app.add_url_rule('/my_order/cancel/', 'order_cancel_button', view_func=api.order_cancel_button, methods=['POST'])
     app.add_url_rule('/order/get_info/', 'info_get', view_func=api.get_order_info, methods=['GET'])
     app.add_url_rule('/mytest/', 'mytest', view_func=api.mytest, methods=['GET'])
     # time
@@ -103,5 +103,5 @@ def init():
 init()
 
 if __name__ == '__main__':
-    app.run(debug=True)  # host='0.0.0.0', port=8080, debug=True)
+    app.run(host='172.18.93.199', port=5000, debug=True)  # host='0.0.0.0', port=8080, debug=True)
 
