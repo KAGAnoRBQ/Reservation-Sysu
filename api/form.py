@@ -98,3 +98,49 @@ class PayOrder(wtforms.Form):
 
 class CancelOrder(wtforms.Form):
     cancel_order_id = wtforms.StringField(validators=[DataRequired()])
+
+
+class SportFieldDefineForm(wtforms.Form):
+    court_name = wtforms.StringField()
+    court_description = wtforms.StringField()
+    court_type = wtforms.IntegerField()
+    court_number = wtforms.IntegerField()
+    court_fee = wtforms.IntegerField()
+    period_class_id = wtforms.IntegerField()
+
+
+class EditSportFieldForm(wtforms.Form):
+    id = wtforms.StringField(validators=[DataRequired()])
+    court_name = wtforms.StringField()
+    court_type = wtforms.StringField()
+    court_num = wtforms.StringField()
+    court_fee = wtforms.StringField()
+    period_class_id = wtforms.StringField()
+    order_days = wtforms.StringField()
+    court_description = wtforms.StringField()
+
+
+class AddSportFieldForm(wtforms.Form):
+    gym_id = wtforms.StringField(DataRequired())
+    court_name = wtforms.StringField(DataRequired())
+    court_type = wtforms.StringField(DataRequired())
+    court_num = wtforms.StringField(DataRequired())
+    court_fee = wtforms.StringField(DataRequired())
+    period_class_id = wtforms.StringField(DataRequired())
+    order_days = wtforms.StringField(DataRequired())
+    court_description = wtforms.StringField(DataRequired())
+
+
+class PeriodClassForm(wtforms.Form):
+    period_class_name = wtforms.StringField()
+    period_description = wtforms.StringField()
+
+
+class EditPeriodForm(wtforms.Form):
+    period_id = wtforms.StringField()
+    period_class_name = wtforms.StringField()
+    period_description = wtforms.StringField()
+
+class AddPeriodForm(wtforms.Form):
+    period_class_name = wtforms.StringField(validators=[DataRequired()])
+    period_description = wtforms.StringField(validators=[DataRequired()])

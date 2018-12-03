@@ -124,3 +124,10 @@ CREATE TABLE `court`  (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4;
 
+DROP TABLE IF EXISTS `account`;
+CREATE TABLE `CourtType`  (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `court_type_name` varchar(64) CHARACTER SET utf8mb4  NOT NULL DEFAULT '',
+  `court_type_description` text CHARACTER SET utf8mb4  NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4;

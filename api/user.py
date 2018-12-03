@@ -160,3 +160,28 @@ def query_user():
                            'records': total_count,
                        },
                        message='done', error_code=const.code_success)
+
+
+def transform2(user):
+    item = pick(user,
+                'id',
+                'user_name',
+                'user_number',
+                'account_balance',
+                'dept_id'
+                )
+    return item
+
+@login_required_api
+@ensure_session_removed
+def query_user2():
+    dept_id = request.args.get('dept_id')
+    if dept_id == '-1':
+        users = UserInfo.query.filter_by()
+    else:
+        users = UserInfo.query.filter_by(dept_id=dept_id)
+    users = users.all()
+    data = map(lambda x: transform2(x), users)
+    data = list(data)
+    return query_reply(success=True,
+                      data=data)

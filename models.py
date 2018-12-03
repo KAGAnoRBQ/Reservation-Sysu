@@ -1,7 +1,7 @@
 # coding: utf-8
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.mysql import (
-    BIGINT, VARCHAR, DATETIME, BOOLEAN, TINYINT, TEXT, DATE, TIME, INTEGER
+    BIGINT, VARCHAR, DATETIME, BOOLEAN, TINYINT, INTEGER, TIME
 )
 from flask_login import UserMixin
 import functools
@@ -116,6 +116,8 @@ class Court(db.Model, MySQLMixin):
     court_fee = db.Column(INTEGER(unsigned=True), default=0)
     order_days = db.Column(INTEGER(unsigned=True), default=1)
     period_class_id = db.Column(INTEGER(unsigned=True), default=0)
+    record_status = db.Column(TINYINT(unsigned=True), default=0)
+    update_time = db.Column(DATETIME, default=datetime.now)
 
     def to_json(self):
         _dict = self.__dict__
@@ -127,6 +129,8 @@ class PeriodClass(db.Model, MySQLMixin):
     id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
     period_class_name = db.Column(VARCHAR(64), default="")
     period_class_description = db.Column(VARCHAR(240), default="")
+    update_time = db.Column(DATETIME, default=datetime.now())
+    record_status = db.Column(TINYINT(unsigned=True), default=0)
 
     def to_json(self):
         _dict = self.__dict__
@@ -242,7 +246,7 @@ class Achievement(db.Model, MySQLMixin):
 # 时间段数据，作为上面的时间段类型的具体数据的描述，比如时间段的起始时间、结束时间等
 class PeriodData(db.Model, MySQLMixin):
     id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
-    period_class_id = db.Column(BIGINT(unsigned=True), nullable=False)
+    period_class_id = db.Column(BIGINT(unsigned=True), default=0)
     start_time = db.Column(TIME, nullable=False)
     end_time = db.Column(TIME, nullable=False)
     create_time = db.Column(DATETIME, default=datetime.now)
@@ -291,6 +295,16 @@ class Schedule(db.Model, MySQLMixin):
     update_time = db.Column(DATETIME, default=datetime.now)
     record_status = db.Column(TINYINT(unsigned=True), default=0)
 
+    def to_json(self):
+        _dict = self.__dict__
+        if "_sa_instance_state" in _dict:
+            del _dict["_sa_instance_state"]
+        return _dict
+
+class CourtType(db.Model,MySQLMixin):
+    id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
+    court_type_name = db.Column(VARCHAR(64), nullable=False)
+    court_type_description = db.Column(db.TEXT, default="")
     def to_json(self):
         _dict = self.__dict__
         if "_sa_instance_state" in _dict:

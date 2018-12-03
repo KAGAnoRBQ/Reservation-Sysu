@@ -14,7 +14,7 @@ import logging
 
 def get_user_account(account):
     item = {
-        'acccount_time': account.account_time,
+        'account_time': account.account_time,
         'order_id': account.order_id,
         'account_summary': account.account_summary,
         'amount': account.amount,
@@ -29,7 +29,7 @@ def get_manager_account(account):
     item = {
         'user_name': user.user_name,
         'user_number': user.user_number,
-        'acccount_time': account.account_time,
+        'account_time': account.account_time,
         'order_id': account.order_id,
         'account_summary': account.account_summary,
         'amount': account.amount,
@@ -82,7 +82,7 @@ def account_manager_query():
 @ensure_session_removed
 def account_deposit():
     user_ids = request.json.get('user_ids')
-    amount = request.json.get('amount')
+    amount = (int)(request.json.get('amount'))
     users = UserInfo.query.filter(UserInfo.id.in_(user_ids), UserInfo.record_status == const.record_normal).all()
 
     for user in users:
@@ -91,6 +91,19 @@ def account_deposit():
         account = Account(user_id=user.id, order_id=0, account_summary='充值', account_time=datetime.now(), amount=amount)
         db.session.add(account)
 
+    res = db_commit()
+    return reply(success=res[0], message=res[1], error_code=res[2])
+
+
+@login_required_api
+def account_clear_balance():
+    user_ids = request.json.get('user_ids')
+    users = UserInfo.query.filter(UserInfo.id.in_(user_ids), UserInfo.record_status == const.record_normal).all()
+    for user in users:
+        user.update_time = datetime.now()
+        account = Account(user_id=user.id, order_id=0, account_summary='清零', account_time=datetime.now(), amount=user.account_balance)
+        user.account_balance = 0
+        db.session.add(account)
     res = db_commit()
     return reply(success=res[0], message=res[1], error_code=res[2])
 

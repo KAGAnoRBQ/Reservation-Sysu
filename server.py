@@ -21,6 +21,8 @@ class IndexRule(Rule):
 
 def init():
     db.init_app(app)
+    db.app = app
+    db.create_all()
 
     # db.app = app
     # db.create_all()
@@ -49,6 +51,7 @@ def init():
     # login
     app.add_url_rule('/user/login/', 'user_login', view_func=api.login, methods=['POST'])
     app.add_url_rule('/user/login_out/', 'user_login_out', view_func=api.login_out, methods=['POST'])
+    
     # user
     app.add_url_rule('/user/register/', 'user_register', view_func=api.register, methods=['POST'])
     app.add_url_rule('/user/query/', 'user_query', view_func=api.query_user, methods=['POST'])
@@ -56,7 +59,8 @@ def init():
                      methods=['POST'])
     app.add_url_rule('/user/disable/change/', 'user_disable_change', view_func=api.change_disable,
                      methods=['POST'])
-
+    app.add_url_rule('/user/query2/', 'user_query2', view_func=api.query_user2, methods=['GET'])
+    
     # department
     app.add_url_rule('/department/add/', 'department_add', view_func=api.add_department, methods=['POST'])
     app.add_url_rule('/department/delete/', 'department_delete', view_func=api.delete_department, methods=['POST'])
@@ -71,7 +75,7 @@ def init():
     app.add_url_rule('/period_data/add/', 'add_period_data', view_func=api.add_period_data, methods=['POST'])
     app.add_url_rule('/period_data/delete/', 'delete_period_data', view_func=api.delete_period_data, methods=['POST'])
     app.add_url_rule('/period_data/query/', 'query_period_data', view_func=api.query_period_data, methods=['POST'])
-
+    
     # court_resource
     app.add_url_rule('/court_resource/add/', 'add_court_resource', view_func=api.add_court_resource, methods=['POST'])
     app.add_url_rule('/court_resource/delete/', 'delete_court_resource', view_func=api.delete_court_resource,
@@ -99,9 +103,21 @@ def init():
     app.add_url_rule('/account/manager_query/', 'account_manager_query', view_func=api.account_manager_query, methods=['GET'])
     app.add_url_rule('/account/deposit/', 'account_deposit', view_func=api.account_deposit, methods=['POST'])
     app.add_url_rule('/account/query_balance/', 'account_query_balance', view_func=api.account_query_balance, methods=['GET'])
+    app.add_url_rule('/account/clear/', 'account_clear', view_func=api.account_clear_balance, methods=['POST'])
+    
+    #fields
+    app.add_url_rule('/sportsfield/define/', 'sportsfield_field_define', view_func=api.sportsfield_define, methods=['GET'])
+    app.add_url_rule('/sportsfield/add/', 'sportsfield_field_add', view_func=api.sportsfield_add, methods=['POST'])
+    app.add_url_rule('/sportsfield/edit', 'sportsfield_field_edit', view_func=api.sportsfield_edit,methods=['POST'])
+    app.add_url_rule('/sportsfield/typequery','sportsfield_court_type_query',view_func=api.court_type_query,methods=['GET'])
+    app.add_url_rule('/sportsfield/delete','sportsfield_delete',view_func=api.sportsfield_delete,methods=['GET'])
 
+    #time
+    app.add_url_rule('/period/period_query', 'period_period_query', view_func=api.period_query,methods=['GET'])
+    app.add_url_rule('/peroid/period_add', 'period_period_add', view_func=api.period_add,methods=['POST'])
+    app.add_url_rule('/peroid/peroid_edit', 'period_period_edit', view_func=api.period_edit,methods=['POST'])
+    app.add_url_rule('/peroid/period_delete', 'period_delete', view_func=api.period_delete,methods=['GET'])
 init()
 
 if __name__ == '__main__':
-    app.run(host='172.18.93.199', port=5000, debug=True)  # host='0.0.0.0', port=8080, debug=True)
-
+    app.run(host='127.0.0.1', port=5000, debug=True)

@@ -88,3 +88,23 @@ def get_page_info(request):
     if not page_size:
         page_size = const.page_size_default
     return int(current_page), int(page_size)
+
+
+def get_gym_id(request):
+    current_gym = request.args.get('gym_id')
+    if not current_gym:
+        current_gym = const.current_gym_default
+    return int(current_gym)
+
+
+def get_sportsfield_id(request):
+    current_sportsfield = request.args.get('court_id')
+    if not current_sportsfield:
+        current_sportsfield = const.current_court_default
+    return int(current_sportsfield)
+
+def get_period_class_id(request):
+    current_period_id = request.args.get('period_id')
+    if not current_period_id:
+        current_period_id = const.current_period_class_default
+    return int(current_period_id)
