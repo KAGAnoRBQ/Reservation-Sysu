@@ -3,7 +3,7 @@ from api.login import login, login_out
 from api.user import register, change_permission, change_disable, query_user
 from api.department import add_department, delete_department, query_department
 from api.period_data import add_period_data, delete_period_data, query_period_data
-from api.booking import pay_money, cancel_order, get_order_info, mytest
+from api.booking import pay_money, order_cancel_button, get_order_info, mytest
 from api.court_resource import add_court_resource, delete_court_resource, query_court_resource
 from api.schedule import add_schedule, delete_schedule, query_schedule
 from api.gym import gym_add, query_gym, edit_gym
@@ -25,7 +25,7 @@ __all__ = [
     'delete_period_data',
     'query_period_data',
     'pay_money',
-    'cancel_order',
+    'order_cancel_button',
     'get_order_info',
     'mytest',
     'add_court_resource',
