@@ -46,11 +46,22 @@ def delete_court_resource():
 
 @login_required_api
 def query_court_resource():
-    court_resources = CourtResource.query.order_by(
-        CourtResource.court_id
-    ).filter_by(
-        record_status=const.record_normal
-    ).all()
+    court_resource_id = utils.get_court_resource_id(request)
+    court_id = utils.get_court_id(request)
+    if court_resource_id is not None:
+        court_resources = CourtResource.query.order_by(
+            CourtResource.court_id
+        ).filter_by(
+            id = court_resource_id,
+            record_status = const.record_normal
+        ).all()
+    else:
+        court_resources = CourtResource.query.order_by(
+            CourtResource.court_id
+        ).filter_by(
+            court_id = court_id,
+            record_status = const.record_normal
+        ).all()
     data = []
     for court_resource in court_resources:
         data.append(court_resource.to_json())

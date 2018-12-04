@@ -40,11 +40,22 @@ def delete_period_data():
 
 @login_required_api
 def query_period_data():
-    period_datas = PeriodData.query.order_by(
-        PeriodData.period_class_id
-    ).filter_by(
-        record_status=const.record_normal
-    ).all()
+    period_id = utils.get_period_id(request)
+    period_class_id = utils.get_real_period_class_id(request)
+    if period_id is not None:
+        period_datas = PeriodData.query.order_by(
+            PeriodData.period_class_id
+        ).filter_by(
+            id = period_id,
+            record_status=const.record_normal
+        ).all()
+    else:
+        period_datas = PeriodData.query.order_by(
+            PeriodData.period_class_id
+        ).filter_by(
+            period_class_id = period_class_id,
+            record_status=const.record_normal
+        ).all()
     data = []
     for period_data in period_datas:
         data.append(period_data.to_json())

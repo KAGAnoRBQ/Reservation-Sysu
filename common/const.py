@@ -32,3 +32,7 @@ user_disabled_true = 1
 current_gym_default = 0
 current_court_default = 0
 current_period_class_default = 0
+
+# court_resource
+court_id_default = 0
+

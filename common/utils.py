@@ -108,3 +108,34 @@ def get_period_class_id(request):
     if not current_period_id:
         current_period_id = const.current_period_class_default
     return int(current_period_id)
+
+def get_real_period_class_id(request):
+    period_class_id = request.args.get('period_class_id')
+    if not period_class_id:
+        period_class_id = const.current_period_class_default
+    return int(period_class_id)
+
+def get_period_id(request):
+    period_id = request.args.get('period_id', None)
+    if period_id is None:
+        return period_id
+    return int(period_id)
+
+def get_court_resource_id(request):
+    court_resource_id = request.args.get('court_resource_id', None)
+    if court_resource_id is None:
+        return court_resource_id
+    return int(court_resource_id)
+
+def get_court_id(request):
+    court_id = request.args.get('court_id')
+    if not court_id:
+        court_id = const.court_id_default
+    return int(court_id)
+
+def get_schedule_id(request):
+    schedule_id = request.args.get('schedule_id')
+    if schedule_id is None:
+        return schedule_id
+    return int(schedule_id)
+

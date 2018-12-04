@@ -38,11 +38,22 @@ def delete_schedule():
 
 @login_required_api
 def query_schedule():
-    schedules = Schedule.query.order_by(
-        Schedule.court_id
-    ).filter_by(
-        record_status=const.record_normal
-    ).all()
+    schedule_id = utils.get_schedule_id(request)
+    court_id = utils.get_court_id(request)
+    if schedule_id is not None:
+        schedules = Schedule.query.order_by(
+            Schedule.court_id
+        ).filter_by(
+            id = schedule_id,
+            record_status=const.record_normal
+        ).all()
+    else:
+        schedules = Schedule.query.order_by(
+            Schedule.court_id
+        ).filter_by(
+            court_id = court_id,
+            record_status=const.record_normal
+        ).all()        
     data = []
     for schedule in schedules:
         data.append(schedule.to_json())
