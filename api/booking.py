@@ -9,6 +9,8 @@ from common.views import login_required_api
 from common.utils import add_by_data, update_by_data
 import time
 import random
+import datetime
+import re
 
 '''
 付款
@@ -244,3 +246,207 @@ def get_order_info():
     }
 
     return reply(success=True, data=data, message="")
+
+
+
+@login_required_api
+def selectCourt():
+    courts = Court.query.all()
+    if not courts:
+        return reply(success=False, message='无任何场馆！',error_code=1)
+
+    gyms = [Gym.query.filter_by(id=court.gym_id).first() for court in courts]
+    if not gyms:
+        return reply(success=False, message='数据错误！',error_code=2)
+
+    sc = [{'court_id':court.id, 'gym_name':gym.gym_name, 'court_name':court.court_name, 'court_type':court.court_type, 'court_fee':court.court_fee, 'gym_id':gym.id} for court, gym in zip(courts, gyms)]
+    data = {'src' : sc}
+    
+    return reply(success=True, data=data, error_code='')
+
+@login_required_api
+def ordering(id):
+    admin = 0
+    if current_user.user_type == const.user_type_admin:
+        admin = 1
+
+    court = Court.query.filter_by(id=id).first()
+    if not court:
+        return reply(success=False, message='无对应场馆！',error_code=1)
+
+    date_now = datetime.date.today()
+
+    dates = []
+    occupy = {}
+    periods = [(per.id, per.start_time, per.end_time) for per in PeriodData.query.filter_by(period_class_id=court.period_class_id).all()]
+    periods = [(period[0], period[1].strftime('%H:%M'), period[2].strftime('%H:%M')) for period in periods]             
+    if not periods:
+        return reply(success=False, message='无对应时间段！',error_code=2)
+
+
+    for i in range(1, court.order_days+1):
+        date = (date_now+datetime.timedelta(days = i))
+        d = date.strftime('%m.%d')
+        dates.append(d)
+        occupy[d] = {}
+        for period in periods:
+            occupy[d][period[0]]={}
+            court_resource = CourtResource.query.filter_by(date=date, period_id=period[0], court_id=id).all()
+            if not court_resource:
+                return reply(success=False, message='无场地资源！',error_code=3)
+            for cr in court_resource:
+                if cr.occupied :
+                    occupy[d][period[0]][cr.court_number] = 1
+                else :
+                    if cr.order_count < cr.max_order_count:
+                        occupy[d][period[0]][cr.court_number] = 0
+                    else:
+                        occupy[d][period[0]][cr.court_number] = 2
+
+    data = {
+        'court_id' : id,
+        'dates': dates,
+        'periods': periods, 
+        'occupy': occupy, 
+        'admin': admin
+    }
+    return reply(success=True, data=data, error_code='')
+                    
+
+@login_required_api
+def order_submit(id):
+    court = Court.query.filter_by(id=id).first()
+    if not court:
+        return reply(success=False, message='无对应场馆！',error_code=1)
+
+    date_now = datetime.date.today()
+
+    dates = []
+    for i in range(1, court.order_days+1):
+        date = (date_now+datetime.timedelta(days = i))
+        dates.append(date)
+
+    cr_name = request.args.get('date_period_number')
+    pattern = re.compile('(.*)_(.*)_(.*)')
+    target_date, target_period, target_number = re.findall(pattern, cr_name)[0]
+    target_date = (list(filter(lambda x:  x.strftime('%m.%d')==target_date, dates)))[0]
+    
+    court_resource_query =CourtResource.query.filter_by(date=target_date, period_id=target_period, court_number=target_number, court_id=id) 
+    court_resource = court_resource_query.first()
+    if not court_resource :
+        return reply(success=False, message="无对应场地资源！", error_code=4)
+    if court_resource.order_count<court_resource.max_order_count and not court_resource.occupied:
+        cr_data = {
+        	'order_count' : court_resource.order_count+1,
+     	}
+        schedule_query = Schedule.query.filter_by(court_id = id, date = court_resource.date)
+        schedule = schedule_query.first()
+        if not schedule:
+            return reply(success=False, message="数据错误！", error_code=5)
+        schedule_date = {
+            'order_count' : schedule.order_count+1,
+        }
+        dt = datetime.datetime.today()
+        if dt.microsecond >= 500000:
+            dt = dt+ datetime.timedelta(seconds = 1)
+        dt = dt - datetime.timedelta(microseconds=dt.microsecond)
+        co_data = {
+            'id' : None,
+            'user_id' : current_user.id,
+            'order_time' : dt,
+            'resource_id' : court_resource.id,
+            'pay_time' : None,
+            'amount' : 0,
+            'is_acked' : False,
+            'ack_time' : None,
+            'is_canceled' : False,
+            'cancel_time' : None,
+            'is_used' : False 
+        }
+        update_by_data(court_resource_query, cr_data, False)
+        update_by_data(schedule_query, schedule_date, False)
+        res = add_by_data(CourtOrder, co_data)
+        if res[0] is True:
+            order_id = CourtOrder.query.filter_by(user_id=current_user.id, order_time=dt, resource_id=court_resource.id, amount=0, \
+                                                is_acked=False, is_canceled=False, is_used=False).first()
+            if not order_id :
+                return reply(success=False, message="数据错误！", error_code=8)
+            order_id = order_id.id
+            return reply(success=True, data={'order_id': order_id}, error_code=0)
+        return reply(success=res[0], message=res[1], error_code=res[2])
+    elif court_resource.order_count>=court_resource.max_order_count:
+        return reply(success=False, message="当前场地预订剩余量为0！", error_code = 6)
+    elif court_resource.occupied:
+        return reply(success=False, message="当前场地已占用！", error_code = 7)
+    
+
+@login_required_api
+def courtResource_cancel(id):
+    if current_user.user_type != const.user_type_admin:
+        return reply(success=False, message='无权限', error_code=const.code_not_permit)
+    
+    court = Court.query.filter_by(id=id).first()
+    date_now = datetime.date.today()
+    dates = []
+    for i in range(1, court.order_days+1):
+        date = (date_now+datetime.timedelta(days = i))
+        dates.append(date)
+
+    pattern = re.compile('(.*)_(.*)_(.*)')
+    cr_name = request.args.get('date_period_number')
+    target_date, target_period, target_number = re.findall(pattern, cr_name)[0]
+    target_date = (list(filter(lambda x:  x.strftime('%m.%d')==target_date, dates)))[0]
+    court_resource_query = CourtResource.query.filter_by(date=target_date, period_id=target_period, court_number=target_number, court_id=id)
+    court_resource = court_resource_query.first()
+    if court_resource and court_resource.occupied == True:
+        cr_data = {
+            'occupied' : False,
+        }
+        schedule_query = Schedule.query.filter_by(court_id = id, date = court_resource.date)
+        schedule = schedule_query.first()
+        if not schedule:
+            return reply(success=False, message="数据错误！", error_code=2)
+        schedule_date = {
+            'occupied_count' : schedule.occupied_count-1,
+        }
+        update_by_data(court_resource_query, cr_data, False)
+        res = update_by_data(schedule_query, schedule_date)
+        return reply(success=res[0], message=res[1], error_code=res[2])
+    return reply(success=True, message='', error_code=const.success)
+    
+
+@login_required_api
+def courtResource_occupied(id):
+    if current_user.user_type != const.user_type_admin:
+        return reply(success=False, message='无权限', error_code=const.code_not_permit)
+    
+    court = Court.query.filter_by(id=id).first()
+    date_now = datetime.date.today()
+    dates = []
+    for i in range(1, court.order_days+1):
+        date = (date_now+datetime.timedelta(days = i))
+        dates.append(date)
+
+    pattern = re.compile('(.*)_(.*)_(.*)')
+    cr_name = request.args.get('date_period_number')
+    target_date, target_period, target_number = re.findall(pattern, cr_name)[0]
+    target_date = (list(filter(lambda x:  x.strftime('%m.%d')==target_date, dates)))[0]
+    court_resource_query = CourtResource.query.filter_by(date=target_date, period_id=target_period, court_number=target_number, court_id=id)
+    court_resource = court_resource_query.first()
+    if court_resource and court_resource.occupied == False:
+        cr_data = {
+            'occupied' : True,
+        }
+    
+        schedule_query = Schedule.query.filter_by(court_id = id, date = court_resource.date)
+        schedule = Schedule.query.filter_by(court_id = id, date = court_resource.date).first()
+        if not schedule:
+            return reply(success=False, message="数据错误！", error_code=2)
+        schedule_date = {
+            'occupied_count' : schedule.occupied_count+1,
+        }
+        update_by_data(court_resource_query, cr_data, False)
+        res = update_by_data(schedule_query, schedule_date)
+        return reply(success=res[0], message=res[1], error_code=res[2])
+    return reply(success=True, message='', error_code=const.success)
+
