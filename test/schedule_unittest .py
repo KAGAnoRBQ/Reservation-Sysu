@@ -21,12 +21,14 @@ class ScheduleTest(unittest.TestCase):
 		}
 		res = requests.post(url, data)
 		res_message = json.loads(res.text)
+		print res_message
 		self.assertEqual(res_message['success'], True)
 	
 	def test_delete_schedule(self):
 		url = self.url + 'query/'
-		res = requests.post(url)
+		res = requests.get(url)
 		res_message = json.loads(res.text)
+		print res_message
 		self.assertEqual(res_message['success'], True)
 		period_id = int(res_message['data'][0]['id'])
 		url = self.url + 'delete/'
@@ -35,6 +37,7 @@ class ScheduleTest(unittest.TestCase):
 		}
 		res = requests.post(url, data)
 		res_message = json.loads(res.text)
+		print res_message
 		self.assertEqual(res_message['success'], True)
 
 if __name__ == "__main__":
