@@ -6,7 +6,7 @@ from common import const, utils
 from common.response import reply
 from models import PeriodData, ensure_session_removed
 
-@login_required_api
+# @login_required_api
 @ensure_session_removed
 def add_period_data():
     form = AddPeriodData(request.form)
@@ -28,7 +28,7 @@ def add_period_data():
     res = utils.add_by_data(PeriodData, period_data)
     return reply(success=res[0], message=res[1], error_code=res[2])
 
-@login_required_api
+# @login_required_api
 @ensure_session_removed
 def delete_period_data():
     form = DeleteByIdForm(request.form)
@@ -38,7 +38,7 @@ def delete_period_data():
     res = utils.delete_by_id(PeriodData, form.id.data)
     return reply(success=res[0], message=res[1], error_code=res[2])
 
-@login_required_api
+# @login_required_api
 def query_period_data():
     period_id = utils.get_period_id(request)
     period_class_id = utils.get_real_period_class_id(request)

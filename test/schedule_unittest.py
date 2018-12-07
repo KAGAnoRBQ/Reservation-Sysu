@@ -4,31 +4,32 @@ import json
 import unittest
 import requests
 
-class CourtResourceTest(unittest.TestCase):
+class ScheduleTest(unittest.TestCase):
 	def setUp(self):
-		self.url = "http://127.0.0.1:5000/api/court_resource/"
+		self.url = "http://127.0.0.1:5000/api/schedule/"
 	
-	def test_add_court_resource(self):
+	def test_add_schedule(self):
 		url = self.url + 'add/'
 		data = {
+            'court_id': 1,
 			'date': '2018-01-01 00:00:00',
-			'period_id': 1,
-			'court_id': 1,
-			'court_number': 1,
-			'occupied': 0,
-			'max_order_count': 1,
-			'order_count': 1,
+			'total': 1,
+            'order_count': 1,
+            'occupied_count': 1,
+            'visible': 0,
+            'enabled': 0,
 		}
 		res = requests.post(url, data)
 		res_message = json.loads(res.text)
+		print(res_message)
 		print res_message
 		self.assertEqual(res_message['success'], True)
 	
-	def test_delete_court_resource(self):
+	def test_delete_schedule(self):
 		url = self.url + 'query/'
 		res = requests.get(url)
 		res_message = json.loads(res.text)
-		print res_message
+		print (res_message)
 		self.assertEqual(res_message['success'], True)
 		period_id = int(res_message['data'][0]['id'])
 		url = self.url + 'delete/'
@@ -37,14 +38,14 @@ class CourtResourceTest(unittest.TestCase):
 		}
 		res = requests.post(url, data)
 		res_message = json.loads(res.text)
-		print res_message
+		print (res_message)
 		self.assertEqual(res_message['success'], True)
 
 if __name__ == "__main__":
 	suite = unittest.TestSuite() 
 	tests = [
-		CourtResourceTest("test_add_court_resource"), 
-		CourtResourceTest("test_delete_court_resource"), 
+		ScheduleTest("test_add_schedule"), 
+		ScheduleTest("test_delete_schedule"), 
 	] 
 	suite.addTests(tests) 
 	runner = unittest.TextTestRunner(verbosity=2) 
