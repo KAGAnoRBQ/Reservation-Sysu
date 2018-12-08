@@ -50,8 +50,8 @@ class UserInfo(db.Model, MySQLMixin, UserMixin):
     account_balance = db.Column(BIGINT(unsigned=True), nullable=False)
     disabled = db.Column(TINYINT(unsigned=True), default=0)
     record_status = db.Column(TINYINT(unsigned=True), default=0)  # 0---code_success 1---delete
-    create_time = db.Column(DATETIME, default=datetime.now)
-    update_time = db.Column(DATETIME, default=datetime.now)
+    create_time = db.Column(DATETIME, default=datetime.now())
+    update_time = db.Column(DATETIME, default=datetime.now())
 
     def to_json(self):
         _dict = self.__dict__
@@ -64,8 +64,8 @@ class Department(db.Model, MySQLMixin):
     id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
     dept_name = db.Column(VARCHAR(255), nullable=False)
     record_status = db.Column(TINYINT(unsigned=True), default=0)
-    create_time = db.Column(DATETIME, default=datetime.now)
-    update_time = db.Column(DATETIME, default=datetime.now)
+    create_time = db.Column(DATETIME, default=datetime.now())
+    update_time = db.Column(DATETIME, default=datetime.now())
 
     def to_json(self):
         _dict = self.__dict__
@@ -95,8 +95,8 @@ class Gym(db.Model, MySQLMixin):
     location = db.Column(VARCHAR(255), nullable=False)
     manager_number = db.Column(BIGINT(unsigned=True), nullable=False)
     record_status = db.Column(TINYINT(unsigned=True), default=0)
-    create_time = db.Column(DATETIME, default=datetime.now)
-    update_time = db.Column(DATETIME, default=datetime.now)
+    create_time = db.Column(DATETIME, default=datetime.now())
+    update_time = db.Column(DATETIME, default=datetime.now())
 
     def to_json(self):
         _dict = self.__dict__
@@ -117,7 +117,7 @@ class Court(db.Model, MySQLMixin):
     order_days = db.Column(INTEGER(unsigned=True), default=1)
     period_class_id = db.Column(INTEGER(unsigned=True), default=0)
     record_status = db.Column(TINYINT(unsigned=True), default=0)
-    update_time = db.Column(DATETIME, default=datetime.now)
+    update_time = db.Column(DATETIME, default=datetime.now())
 
     def to_json(self):
         _dict = self.__dict__
@@ -189,8 +189,8 @@ class Device(db.Model, MySQLMixin):
     manufacturer_date = db.Column(DATETIME, default='')
     department_id = db.Column(BIGINT(unsigned=True), nullable=False)
     record_status = db.Column(TINYINT(unsigned=True), default=0)
-    create_time = db.Column(DATETIME, default=datetime.now)
-    update_time = db.Column(DATETIME, default=datetime.now)
+    create_time = db.Column(DATETIME, default=datetime.now())
+    update_time = db.Column(DATETIME, default=datetime.now())
     description = db.Column(VARCHAR(1020), nullable=False)
 
 
@@ -198,8 +198,8 @@ class Manufacturer(db.Model, MySQLMixin):
     id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
     name = db.Column(VARCHAR(255), nullable=False)
     record_status = db.Column(TINYINT(unsigned=True), default=0)  # 0---code_success 1---delete
-    create_time = db.Column(DATETIME, default=datetime.now)
-    update_time = db.Column(DATETIME, default=datetime.now)
+    create_time = db.Column(DATETIME, default=datetime.now())
+    update_time = db.Column(DATETIME, default=datetime.now())
 
 
 class Member(db.Model, MySQLMixin):
@@ -208,8 +208,8 @@ class Member(db.Model, MySQLMixin):
     name = db.Column(VARCHAR(255), nullable=False)
     department_id = db.Column(BIGINT(unsigned=True), nullable=False)
     record_status = db.Column(TINYINT(unsigned=True), default=0)
-    create_time = db.Column(DATETIME, default=datetime.now)
-    update_time = db.Column(DATETIME, default=datetime.now)
+    create_time = db.Column(DATETIME, default=datetime.now())
+    update_time = db.Column(DATETIME, default=datetime.now())
 
 
 class DeviceRent(db.Model, MySQLMixin):
@@ -217,30 +217,30 @@ class DeviceRent(db.Model, MySQLMixin):
     device_code = db.Column(VARCHAR(255), nullable=False)
     status = db.Column(TINYINT(unsigned=True), default=0)
     borrower_member_code = db.Column(VARCHAR(255), nullable=False)
-    borrow_date = db.Column(DATETIME, default=datetime.now)
-    expect_return_date = db.Column(DATETIME, default=datetime.now)
+    borrow_date = db.Column(DATETIME, default=datetime.now())
+    expect_return_date = db.Column(DATETIME, default=datetime.now())
     borrow_remark = db.Column(VARCHAR(1020), nullable=False)
     returner_member_code = db.Column(VARCHAR(255), nullable=False)
-    real_return_date = db.Column(DATETIME, default=datetime.now)
+    real_return_date = db.Column(DATETIME, default=datetime.now())
     return_remark = db.Column(VARCHAR(1020), nullable=False)
     record_status = db.Column(TINYINT(unsigned=True), default=0)
-    create_time = db.Column(DATETIME, default=datetime.now)
-    update_time = db.Column(DATETIME, default=datetime.now)
+    create_time = db.Column(DATETIME, default=datetime.now())
+    update_time = db.Column(DATETIME, default=datetime.now())
 
 
 class Achievement(db.Model, MySQLMixin):
     id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
     device_code = db.Column(BIGINT(unsigned=True), nullable=False)
     member_code = db.Column(BIGINT(unsigned=True), nullable=False)
-    manufacturer_date = db.Column(DATETIME, default=datetime.now)
+    manufacturer_date = db.Column(DATETIME, default=datetime.now())
     achievement_description = db.Column(VARCHAR(1020), nullable=False)
     patent_description = db.Column(VARCHAR(1020), nullable=False)
     paper_description = db.Column(VARCHAR(1020), nullable=False)
     competition_description = db.Column(VARCHAR(1020), nullable=False)
     achievement_remark = db.Column(VARCHAR(1020), nullable=False)
     record_status = db.Column(TINYINT(unsigned=True), default=0)
-    create_time = db.Column(DATETIME, default=datetime.now)
-    update_time = db.Column(DATETIME, default=datetime.now)
+    create_time = db.Column(DATETIME, default=datetime.now())
+    update_time = db.Column(DATETIME, default=datetime.now())
 
 
 # 时间段数据，作为上面的时间段类型的具体数据的描述，比如时间段的起始时间、结束时间等
@@ -249,8 +249,8 @@ class PeriodData(db.Model, MySQLMixin):
     period_class_id = db.Column(BIGINT(unsigned=True), default=0)
     start_time = db.Column(DATETIME, nullable=False)
     end_time = db.Column(DATETIME, nullable=False)
-    create_time = db.Column(DATETIME, default=datetime.now)
-    update_time = db.Column(DATETIME, default=datetime.now)
+    create_time = db.Column(DATETIME, default=datetime.now())
+    update_time = db.Column(DATETIME, default=datetime.now())
     record_status = db.Column(TINYINT(unsigned=True), default=0)
 
     def to_json(self):
@@ -263,15 +263,15 @@ class PeriodData(db.Model, MySQLMixin):
 # court_resource 场地资源
 class CourtResource(db.Model, MySQLMixin):
     id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
-    date = db.Column(DATETIME, default=datetime.now)
+    date = db.Column(DATETIME, default=datetime.now())
     period_id = db.Column(BIGINT(unsigned=True), default=0)
     court_id = db.Column(BIGINT(unsigned=True), default=0)
     court_number = db.Column(BIGINT(unsigned=True), default=0)
     occupied = db.Column(TINYINT(unsigned=True), default=0)
     max_order_count = db.Column(BIGINT(unsigned=True), default=0)
     order_count = db.Column(BIGINT(unsigned=True), default=0)
-    create_time = db.Column(DATETIME, default=datetime.now)
-    update_time = db.Column(DATETIME, default=datetime.now)
+    create_time = db.Column(DATETIME, default=datetime.now())
+    update_time = db.Column(DATETIME, default=datetime.now())
     record_status = db.Column(TINYINT(unsigned=True), default=0)
 
     def to_json(self):
@@ -285,14 +285,14 @@ class CourtResource(db.Model, MySQLMixin):
 class Schedule(db.Model, MySQLMixin):
     id = db.Column(BIGINT(unsigned=True), autoincrement=True, primary_key=True)
     court_id = db.Column(BIGINT(unsigned=True), default=0)
-    date = db.Column(DATETIME, default=datetime.now)
+    date = db.Column(DATETIME, default=datetime.now())
     total = db.Column(BIGINT(unsigned=True), default=0)
     order_count = db.Column(BIGINT(unsigned=True), default=0)
     occupied_count = db.Column(BIGINT(unsigned=True), default=0)
     visible = db.Column(TINYINT(unsigned=True), default=0)
     enabled = db.Column(TINYINT(unsigned=True), default=0)
-    create_time = db.Column(DATETIME, default=datetime.now)
-    update_time = db.Column(DATETIME, default=datetime.now)
+    create_time = db.Column(DATETIME, default=datetime.now())
+    update_time = db.Column(DATETIME, default=datetime.now())
     record_status = db.Column(TINYINT(unsigned=True), default=0)
 
     def to_json(self):

@@ -10,6 +10,8 @@ class ScheduleTest(unittest.TestCase):
 	
 	def test_add_schedule(self):
 		url = self.url + 'add/'
+		print("\n")
+		print ("add url:", url)
 		data = {
             'court_id': 1,
 			'date': '2018-01-01 00:00:00',
@@ -19,26 +21,31 @@ class ScheduleTest(unittest.TestCase):
             'visible': 0,
             'enabled': 0,
 		}
+		print ("add request data:\n", data)
 		res = requests.post(url, data)
 		res_message = json.loads(res.text)
-		print(res_message)
-		print res_message
+		print ("add return message:\n", res_message)
+		print("\n")
 		self.assertEqual(res_message['success'], True)
 	
 	def test_delete_schedule(self):
-		url = self.url + 'query/'
+		url = self.url + 'query/?court_id=1'
+		print ("query url:", url)
 		res = requests.get(url)
 		res_message = json.loads(res.text)
-		print (res_message)
+		print ("query return message:\n", res_message)
+		print("\n")
 		self.assertEqual(res_message['success'], True)
 		period_id = int(res_message['data'][0]['id'])
 		url = self.url + 'delete/'
 		data = {
 			'id': period_id,
 		}
+		print ("delete request data:\n", data)
 		res = requests.post(url, data)
 		res_message = json.loads(res.text)
-		print (res_message)
+		print ("delete return message:\n", res_message)
+		print("\n")
 		self.assertEqual(res_message['success'], True)
 
 if __name__ == "__main__":
