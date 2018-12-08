@@ -139,3 +139,6 @@ def get_schedule_id(request):
         return schedule_id
     return int(schedule_id)
 
+def get_period_class_name(request):
+    period_class_name = request.args.get('period_class_name')
+    return period_class_name

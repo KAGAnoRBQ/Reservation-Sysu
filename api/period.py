@@ -20,7 +20,16 @@ def period_query():
     if cur_user.user_type > const.user_type_admin:
         return reply(success=False, message='无权限', error_code=const.code_not_permit)
 
-    period_types = PeriodClass.query.order_by(PeriodClass.id).all()
+    period_class_id = get_real_period_class_id(request)
+    if period_class_id is not None:
+        period_types = PeriodClass.query.order_by(
+            Schedule.id
+        ).filter_by(
+            id = period_class_id,
+            record_status=const.record_normal
+        ).all()
+    else:
+        period_types = PeriodClass.query.order_by(PeriodClass.id).all()
     data = []
     for item in period_types:
         data.append(item.to_json())
