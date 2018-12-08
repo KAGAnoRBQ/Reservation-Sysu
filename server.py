@@ -36,10 +36,6 @@ def init():
         search = UserInfo.query.filter_by(
             id='16'
         ).first()
-<<<<<<< HEAD
-        # print(search.user_name)
-=======
->>>>>>> master
         return render_template('index.html')
 
     app.wsgi_app = DispatcherMiddleware(__, {'/api': app.wsgi_app})
