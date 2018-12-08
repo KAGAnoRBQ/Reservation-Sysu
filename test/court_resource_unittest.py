@@ -25,9 +25,9 @@ class CourtResourceTest(unittest.TestCase):
 		self.assertEqual(res_message['success'], True)
 	
 	def test_delete_court_resource(self):
-		url = self.url + 'query/'
+		url = self.url + 'query/?court_id=1'
 		res = requests.get(url)
-		print res.text
+		print (res.text)
 		res_message = json.loads(res.text)
 		print (res_message)
 		self.assertEqual(res_message['success'], True)

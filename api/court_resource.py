@@ -17,6 +17,7 @@ def add_court_resource():
         date = form.date.data,
         period_id = form.period_id.data,
         court_id = form.court_id.data,
+        court_number = form.court_number.data,
         record_status = const.record_normal,
     ).first()
     if court_resource_exist:
@@ -48,6 +49,8 @@ def delete_court_resource():
 def query_court_resource():
     court_resource_id = utils.get_court_resource_id(request)
     court_id = utils.get_court_id(request)
+    print ("court_resource_id", court_resource_id)
+    print ("court_id", court_id)
     if court_resource_id is not None:
         court_resources = CourtResource.query.order_by(
             CourtResource.court_id
