@@ -129,8 +129,8 @@ def sportsfield_add():
     return reply(success=res[0], message=res[1], error_code=res[2])
 
 
-@login_required_api
-@ensure_session_removed
+# @login_required_api
+# @ensure_session_removed
 def court_type_query():
     court_type = CourtType.query.order_by(CourtType.id).all()
     data = []

@@ -113,8 +113,8 @@ DROP TABLE IF EXISTS `court`;
 CREATE TABLE `court`  (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `gym_id` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
-  `court_name` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
-  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `court_name` varchar(32) CHARACTER SET utf8mb4  NOT NULL DEFAULT '',
+  `description` text CHARACTER SET utf8mb4 NOT NULL,
   `court_type` tinyint(16) UNSIGNED NOT NULL DEFAULT 0,
   `court_count` int(16) UNSIGNED NOT NULL DEFAULT 0,
   `max_order_count` int(16) UNSIGNED NOT NULL DEFAULT 1,
