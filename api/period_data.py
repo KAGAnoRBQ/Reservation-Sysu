@@ -49,11 +49,17 @@ def query_period_data():
             id = period_id,
             record_status=const.record_normal
         ).all()
-    else:
+    elif period_class_id is not None:
         period_datas = PeriodData.query.order_by(
             PeriodData.period_class_id
         ).filter_by(
             period_class_id = period_class_id,
+            record_status=const.record_normal
+        ).all()
+    else:
+        period_datas = PeriodData.query.order_by(
+            PeriodData.period_class_id
+        ).filter_by(
             record_status=const.record_normal
         ).all()
     data = []

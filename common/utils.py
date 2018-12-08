@@ -111,8 +111,8 @@ def get_period_class_id(request):
 
 def get_real_period_class_id(request):
     period_class_id = request.args.get('period_class_id')
-    if not period_class_id:
-        period_class_id = const.current_period_class_default
+    if period_class_id is None:
+        return period_class_id
     return int(period_class_id)
 
 def get_period_id(request):

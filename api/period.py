@@ -29,7 +29,9 @@ def period_query():
             record_status=const.record_normal
         ).all()
     else:
-        period_types = PeriodClass.query.order_by(PeriodClass.id).all()
+        period_types = PeriodClass.query.order_by(PeriodClass.id).filter_by(
+            record_status=const.record_normal
+        ).all()
     data = []
     for item in period_types:
         data.append(item.to_json())
