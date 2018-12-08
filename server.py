@@ -36,7 +36,10 @@ def init():
         search = UserInfo.query.filter_by(
             id='16'
         ).first()
+<<<<<<< HEAD
         # print(search.user_name)
+=======
+>>>>>>> master
         return render_template('index.html')
 
     app.wsgi_app = DispatcherMiddleware(__, {'/api': app.wsgi_app})
@@ -70,11 +73,17 @@ def init():
     app.add_url_rule('/pay/pay_money/', 'money_pay', view_func=api.pay_money, methods=['POST'])
     app.add_url_rule('/my_order/cancel/', 'order_cancel_button', view_func=api.order_cancel_button, methods=['POST'])
     app.add_url_rule('/order/get_info/', 'info_get', view_func=api.get_order_info, methods=['GET'])
+    app.add_url_rule('/booking/selectCourt', endpoint='selectCourt', view_func=api.selectCourt, methods=['GET'])
+    app.add_url_rule('/booking/order/<id>', endpoint='ordering', view_func=api.ordering, methods=['GET'])
+    app.add_url_rule('/booking/orderSubmit/<id>', endpoint='orderSubmit', view_func=api.order_submit, methods=['GET'])
+    app.add_url_rule('/booking/resourceCancel/<id>', endpoint='resourceCancel', view_func=api.courtResource_cancel, methods=['GET'])
+    app.add_url_rule('/booking/resourceOccupy/<id>', endpoint='resourceOccupy', view_func=api.courtResource_occupied, methods=['GET'])
 
-    # period_data
+    # time
     app.add_url_rule('/period_data/add/', 'add_period_data', view_func=api.add_period_data, methods=['POST'])
     app.add_url_rule('/period_data/delete/', 'delete_period_data', view_func=api.delete_period_data, methods=['POST'])
     app.add_url_rule('/period_data/query/', 'query_period_data', view_func=api.query_period_data, methods=['GET'])
+    # app.add_url_rule('/period_data/query/', 'query_period_data', view_func=api.query_period_data, methods=['POST'])
     
     # court_resource
     app.add_url_rule('/court_resource/add/', 'add_court_resource', view_func=api.add_court_resource, methods=['POST'])
