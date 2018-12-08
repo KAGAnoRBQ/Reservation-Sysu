@@ -23,7 +23,7 @@ def period_query():
     period_class_id = get_real_period_class_id(request)
     if period_class_id is not None:
         period_types = PeriodClass.query.order_by(
-            Schedule.id
+            PeriodClass.id
         ).filter_by(
             id = period_class_id,
             record_status=const.record_normal
