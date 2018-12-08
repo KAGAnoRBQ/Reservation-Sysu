@@ -49,8 +49,6 @@ def delete_court_resource():
 def query_court_resource():
     court_resource_id = utils.get_court_resource_id(request)
     court_id = utils.get_court_id(request)
-    print ("court_resource_id", court_resource_id)
-    print ("court_id", court_id)
     if court_resource_id is not None:
         court_resources = CourtResource.query.order_by(
             CourtResource.court_id
