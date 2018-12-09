@@ -67,25 +67,25 @@ def query_schedule():
         curDict = schedule.to_json()
         curDict['date'] = curDict['date'].strftime('%Y-%m-%d %H:%M:%S')
         data.append(curDict)
-    # for tmp in data:
-    #     court_id = tmp["court_id"]
-    #     court = Court.query.filter_by(
-    #         id = court_id,
-    #         record_status = const.record_normal
-    #     ).first()
-    #     if court is None:
-    #         court_name = ''
-    #         gym_id = ''
-    #         gym_name = ''
-    #     else:
-    #         court_name = court.court_name
-    #         gym_id = court.gym_id
-    #         gym = Gym.query.filter_by(
-    #             id = gym_id,
-    #             # record_status = const.record_normal
-    #         ).first()
-    #         gym_name = gym.gym_name
-    #     tmp.pop("court_id")
-    #     tmp["court_name"] = court_name
-    #     tmp["gym_name"] = gym_name
+    for tmp in data:
+        court_id = tmp["court_id"]
+        court = Court.query.filter_by(
+            id = court_id,
+            record_status = const.record_normal
+        ).first()
+        if court is None:
+            court_name = ''
+            gym_id = ''
+            gym_name = ''
+        else:
+            court_name = court.court_name
+            gym_id = court.gym_id
+            gym = Gym.query.filter_by(
+                id = gym_id,
+                record_status = const.record_normal
+            ).first()
+            gym_name = gym.gym_name
+        tmp.pop("court_id")
+        tmp["court_name"] = court_name
+        tmp["gym_name"] = gym_name
     return reply(success=True, data=data, message='done', error_code=const.code_success)
