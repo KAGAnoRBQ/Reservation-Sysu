@@ -121,9 +121,9 @@ def init():
 
     #time
     app.add_url_rule('/period/period_query', 'period_period_query', view_func=api.period_query,methods=['GET'])
-    app.add_url_rule('/peroid/period_add', 'period_period_add', view_func=api.period_add,methods=['POST'])
-    app.add_url_rule('/peroid/peroid_edit', 'period_period_edit', view_func=api.period_edit,methods=['POST'])
-    app.add_url_rule('/peroid/period_delete', 'period_delete', view_func=api.period_delete,methods=['GET'])
+    app.add_url_rule('/period/period_add', 'period_period_add', view_func=api.period_add,methods=['POST'])
+    app.add_url_rule('/period/period_edit', 'period_period_edit', view_func=api.period_edit,methods=['POST'])
+    app.add_url_rule('/period/period_delete', 'period_delete', view_func=api.period_delete,methods=['GET'])
 init()
 
 if __name__ == '__main__':

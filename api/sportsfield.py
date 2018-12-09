@@ -85,13 +85,13 @@ def sportsfield_edit():
     if form.court_num.data and form.court_num.data != court.court_count:
         update_data['court_count'] = form.court_num.data
     if form.court_fee.data and form.court_fee.data != court.court_fee:
-        update_data['court_fee'] = form.court_fee
+        update_data['court_fee'] = form.court_fee.data
     if form.order_days.data and form.order_days.data != court.order_days:
         update_data['order_days'] = form.order_days.data
     if form.court_description.data and form.court_description.data != court.description:
         update_data['description'] = form.court_description.data
     if form.period_class_id.data and form.period_class_id.data != court.period_class_id:
-        update_data['period_class_id'] = form.period_class_id
+        update_data['period_class_id'] = form.period_class_id.data
     res = update_by_data(court_rel, update_data,True)
     return reply(success=res[0], message=res[1], error_code=res[2])
 
