@@ -8,17 +8,17 @@ from flask import request
 from common.utils import *
 
 
-@login_required_api
-@ensure_session_removed
+# @login_required_api
+# @ensure_session_removed
 def period_query():
-    cur_user = UserInfo.query.filter_by(
-        id=current_user.id,
-        record_status = const.record_normal
-    ).first()
-    if not cur_user:
-        return reply(success=False, message='内部出错，请联系管理员', error_code=const.code_inner_err)
-    if cur_user.user_type > const.user_type_admin:
-        return reply(success=False, message='无权限', error_code=const.code_not_permit)
+    # cur_user = UserInfo.query.filter_by(
+    #     id=current_user.id,
+    #     record_status = const.record_normal
+    # ).first()
+    # if not cur_user:
+    #     return reply(success=False, message='内部出错，请联系管理员', error_code=const.code_inner_err)
+    # if cur_user.user_type > const.user_type_admin:
+    #     return reply(success=False, message='无权限', error_code=const.code_not_permit)
 
     period_class_id = get_real_period_class_id(request)
     if period_class_id is not None:

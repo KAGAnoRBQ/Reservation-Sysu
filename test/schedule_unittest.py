@@ -92,7 +92,7 @@ if __name__ == "__main__":
 	suite = unittest.TestSuite() 
 	tests = [
 		ScheduleTest("test_add_schedule"), 
-		ScheduleTest("test_delete_schedule"), 
+		# ScheduleTest("test_delete_schedule"), 
 	] 
 	suite.addTests(tests) 
 	runner = unittest.TextTestRunner(verbosity=2) 

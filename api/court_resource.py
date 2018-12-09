@@ -8,8 +8,8 @@ from models import CourtResource, ensure_session_removed
 from models import *
 
 
-@login_required_api
-@ensure_session_removed
+# @login_required_api
+# @ensure_session_removed
 def add_court_resource():
     form = AddCourtResource(request.form)
     if not form.validate():
@@ -36,8 +36,8 @@ def add_court_resource():
     return reply(success=res[0], message=res[1], error_code=res[2])
 
 
-@login_required_api
-@ensure_session_removed
+# @login_required_api
+# @ensure_session_removed
 def delete_court_resource():
     form = DeleteByIdForm(request.form)
     if not form.validate():
@@ -46,7 +46,7 @@ def delete_court_resource():
     res = utils.delete_by_id(CourtResource, form.id.data)
     return reply(success=res[0], message=res[1], error_code=res[2])
 
-@login_required_api
+# @login_required_api
 def query_court_resource():
     court_resource_id = utils.get_court_resource_id(request)
     court_id = utils.get_court_id(request)
@@ -76,7 +76,7 @@ def query_court_resource():
     return reply(success=True, data=data, message='done', error_code=const.code_success)
 
 
-@login_required_api
+# @login_required_api
 def query_name_by_id():
     court_id = request.args.get('court_id', None)
     gym_id = request.args.get('gym_id', None)
