@@ -38,6 +38,14 @@ class CourtResourceTest(unittest.TestCase):
 		self.assertEqual(res_message['success'], True)
 		period_id = int(res_message['data'][0]['id'])
 
+		url = self.url + 'query_field_data/'
+		print ("query_name_by_id url:", url)
+		res = requests.post(url)
+		print (res.text)
+		res_message = json.loads(res.text)
+		print ("query_name_by_id return message:\n", res_message)
+		print("\n")
+
 		url = self.url + 'query_name_by_id/?court_id=2&gym_id=2'
 		print ("query_name_by_id url:", url)
 		res = requests.get(url)

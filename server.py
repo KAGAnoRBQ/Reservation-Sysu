@@ -85,6 +85,8 @@ def init():
     app.add_url_rule('/court_resource/add/', 'add_court_resource', view_func=api.add_court_resource, methods=['POST'])
     app.add_url_rule('/court_resource/delete/', 'delete_court_resource', view_func=api.delete_court_resource,
                      methods=['POST'])
+    app.add_url_rule('/court_resource/query_field_data/', 'query_field_data', view_func=api.query_field_data,
+                     methods=['POST'])
     app.add_url_rule('/court_resource/query/', 'query_court_resource', view_func=api.query_court_resource,
                      methods=['GET'])
     app.add_url_rule('/court_resource/query_name_by_id/', 'query_name_by_id', view_func=api.query_name_by_id,

@@ -8,7 +8,7 @@ from models import CourtResource, ensure_session_removed
 from models import *
 
 
-# @login_required_api
+@login_required_api
 @ensure_session_removed
 def add_court_resource():
     form = AddCourtResource(request.form)
@@ -36,7 +36,7 @@ def add_court_resource():
     return reply(success=res[0], message=res[1], error_code=res[2])
 
 
-# @login_required_api
+@login_required_api
 @ensure_session_removed
 def delete_court_resource():
     form = DeleteByIdForm(request.form)
@@ -46,7 +46,7 @@ def delete_court_resource():
     res = utils.delete_by_id(CourtResource, form.id.data)
     return reply(success=res[0], message=res[1], error_code=res[2])
 
-# @login_required_api
+@login_required_api
 def query_court_resource():
     court_resource_id = utils.get_court_resource_id(request)
     court_id = utils.get_court_id(request)
@@ -76,7 +76,7 @@ def query_court_resource():
     return reply(success=True, data=data, message='done', error_code=const.code_success)
 
 
-#@login_required_api
+@login_required_api
 def query_name_by_id():
     court_id = request.args.get('court_id', None)
     gym_id = request.args.get('gym_id', None)
@@ -93,4 +93,30 @@ def query_name_by_id():
     data["gym_id"] = gym_id
     data["court_name"] = court.court_name
     data["gym_name"] = gym.gym_name
+    return reply(success=True, data=data, message='done', error_code=const.code_success)
+
+@login_required_api
+def query_field_data():
+    courts = Court.query.filter_by(
+        record_status = const.record_normal
+    ).all()
+    data = []
+    for court in courts:
+        ret = {}
+        ret["court_id"] = court.id
+        ret["gym_id"] = court.gym_id
+        ret["court_name"] = court.court_name
+        ret["period_class_id"] = court.period_class_id
+        ret["order_days"] = court.order_days
+        gym = Gym.query.filter_by(
+            id = ret["gym_id"],
+            record_status = const.record_normal
+        ).first()
+        ret["gym_name"] = gym.gym_name
+        period_class = PeriodClass.query.filter_by(
+            id = ret["period_class_id"],
+            record_status = const.record_normal
+        ).first()
+        ret["period_class_name"] = period_class.period_class_name
+        data.append(ret)
     return reply(success=True, data=data, message='done', error_code=const.code_success)

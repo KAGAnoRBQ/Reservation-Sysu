@@ -4,7 +4,7 @@ from api.user import register, change_permission, change_disable, query_user, qu
 from api.department import add_department, delete_department, query_department
 from api.period_data import add_period_data, delete_period_data, query_period_data
 from api.booking import pay_money, order_cancel_button, get_order_info, selectCourt, ordering, order_submit, courtResource_cancel, courtResource_occupied
-from api.court_resource import add_court_resource, delete_court_resource, query_court_resource, query_name_by_id
+from api.court_resource import add_court_resource, delete_court_resource, query_court_resource, query_name_by_id, query_field_data
 from api.schedule import add_schedule, delete_schedule, query_schedule
 from api.gym import gym_add, query_gym, edit_gym
 from api.order import order_user_query, order_manager_query, order_cancel
@@ -61,5 +61,6 @@ __all__ = [
     'period_delete',
     'query_user2',
     'account_clear_balance',
-    'query_name_by_id'
+    'query_name_by_id', 
+    'query_field_data'
 ]
