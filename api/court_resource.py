@@ -5,9 +5,10 @@ from flask import request
 from common import const, utils
 from common.response import reply
 from models import CourtResource, ensure_session_removed
+from models import *
 
 
-@login_required_api
+# @login_required_api
 @ensure_session_removed
 def add_court_resource():
     form = AddCourtResource(request.form)
@@ -35,7 +36,7 @@ def add_court_resource():
     return reply(success=res[0], message=res[1], error_code=res[2])
 
 
-@login_required_api
+# @login_required_api
 @ensure_session_removed
 def delete_court_resource():
     form = DeleteByIdForm(request.form)
@@ -45,7 +46,7 @@ def delete_court_resource():
     res = utils.delete_by_id(CourtResource, form.id.data)
     return reply(success=res[0], message=res[1], error_code=res[2])
 
-@login_required_api
+# @login_required_api
 def query_court_resource():
     court_resource_id = utils.get_court_resource_id(request)
     court_id = utils.get_court_id(request)
@@ -56,14 +57,40 @@ def query_court_resource():
             id = court_resource_id,
             record_status = const.record_normal
         ).all()
-    else:
+    elif court_id is not None:
         court_resources = CourtResource.query.order_by(
             CourtResource.court_id
         ).filter_by(
             court_id = court_id,
             record_status = const.record_normal
         ).all()
+    else:
+        court_resources = CourtResource.query.order_by(
+            CourtResource.court_id
+        ).filter_by(
+            record_status = const.record_normal
+        ).all()
     data = []
     for court_resource in court_resources:
         data.append(court_resource.to_json())
+    return reply(success=True, data=data, message='done', error_code=const.code_success)
+
+
+#@login_required_api
+def query_name_by_id():
+    court_id = request.args.get('court_id', None)
+    gym_id = request.args.get('gym_id', None)
+    court = Court.query.filter_by(
+        id = court_id,
+        record_status = const.record_normal
+    ).first()
+    gym = Gym.query.filter_by(
+        id = gym_id,
+        record_status = const.record_normal
+    ).first()
+    data = {}
+    data["court_id"] = court_id
+    data["gym_id"] = gym_id
+    data["court_name"] = court.court_name
+    data["gym_name"] = gym.gym_name
     return reply(success=True, data=data, message='done', error_code=const.code_success)

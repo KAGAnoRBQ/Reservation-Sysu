@@ -56,7 +56,7 @@ class PeriodTest(unittest.TestCase):
 		period_id = int(res_message['data'][0]['id'])
 		print("\n")
 
-		url = self.url + 'period_delete?period_class_id={}'.format(period_id)
+		url = self.url + 'period_delete/?period_class_id={}'.format(period_id)
 		print ("delete url:", url)
 		res = requests.get(url)
 		res_message = json.loads(res.text)
@@ -65,7 +65,7 @@ class PeriodTest(unittest.TestCase):
 		self.assertEqual(res_message['success'], True)
 		
 		period_id = int(res_message['data'][1]['id'])
-		url = self.url + 'period_delete?period_class_id={}'.format(period_id)
+		url = self.url + 'period_delete/?period_class_id={}'.format(period_id)
 		print ("delete url:", url)
 		res = requests.get(url)
 		res_message = json.loads(res.text)

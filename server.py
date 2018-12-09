@@ -87,7 +87,9 @@ def init():
                      methods=['POST'])
     app.add_url_rule('/court_resource/query/', 'query_court_resource', view_func=api.query_court_resource,
                      methods=['GET'])
-
+    app.add_url_rule('/court_resource/query_name_by_id/', 'query_name_by_id', view_func=api.query_name_by_id,
+                     methods=['GET'])
+                     
     # schedule
     app.add_url_rule('/schedule/add/', 'add_schedule', view_func=api.add_schedule, methods=['POST'])
     app.add_url_rule('/schedule/delete/', 'delete_schedule', view_func=api.delete_schedule, methods=['POST'])

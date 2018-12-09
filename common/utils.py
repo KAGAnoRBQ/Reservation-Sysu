@@ -128,9 +128,9 @@ def get_court_resource_id(request):
     return int(court_resource_id)
 
 def get_court_id(request):
-    court_id = request.args.get('court_id')
-    if not court_id:
-        court_id = const.court_id_default
+    court_id = request.args.get('court_id', None)
+    if court_id is None:
+        return court_id
     return int(court_id)
 
 def get_schedule_id(request):
