@@ -72,12 +72,16 @@ def query_schedule():
             id = court_id,
             record_status = const.record_normal
         ).first()
+        if court is None:
+            continue
         court_name = court.court_name
         gym_id = court.gym_id
         gym = Gym.query.filter_by(
             id = gym_id,
             record_status = const.record_normal
         ).first()
+        if gym is None:
+            continue
         gym_name = gym.gym_name
         tmp.pop("court_id")
         tmp["court_name"] = court_name
