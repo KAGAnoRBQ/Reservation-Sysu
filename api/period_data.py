@@ -4,7 +4,7 @@ from api.form import AddPeriodData, DeleteByIdForm
 from flask import request
 from common import const, utils
 from common.response import reply
-from models import PeriodData, ensure_session_removed
+from models import PeriodData, PeriodClass, ensure_session_removed
 
 # @login_required_api
 # @ensure_session_removed
@@ -40,29 +40,37 @@ def delete_period_data():
 
 # @login_required_api
 def query_period_data():
-    period_id = utils.get_period_id(request)
+    # period_id = utils.get_period_id(request)
     period_class_id = utils.get_real_period_class_id(request)
-    if period_id is not None:
-        period_datas = PeriodData.query.order_by(
-            PeriodData.period_class_id
-        ).filter_by(
-            id = period_id,
-            record_status=const.record_normal
-        ).all()
-    elif period_class_id is not None:
+    if period_class_id is not None:
         period_datas = PeriodData.query.order_by(
             PeriodData.period_class_id
         ).filter_by(
             period_class_id = period_class_id,
             record_status=const.record_normal
         ).all()
-    else:
-        period_datas = PeriodData.query.order_by(
-            PeriodData.period_class_id
+        period_types = PeriodClass.query.order_by(
+            PeriodClass.id
         ).filter_by(
+            id = period_class_id,
             record_status=const.record_normal
-        ).all()
+        ).first()
+        if period_types:
+            period_class_data = period_types.to_json()
+            period_class_name = period_class_data['period_class_name']
+            period_class_description = period_class_data['period_class_description']
+        else:
+            period_class_name = ''
+            period_class_description = ''
+    else:
+        data = [{'period_class_name': '', 'period_class_description': ''}]
+        return reply(success=False, data=data, message='no period class id', error_code=const.code_param_err)
     data = []
     for period_data in period_datas:
-        data.append(period_data.to_json())
+        curDict = period_data.to_json()
+        curDict['start_time'] = curDict['start_time'].strftime('%Y-%m-%d %H:%M:%S')
+        curDict['end_time'] = curDict['end_time'].strftime('%Y-%m-%d %H:%M:%S')
+        curDict['period_class_name'] = period_class_name
+        curDict['period_class_description'] = period_class_description
+        data.append(curDict)
     return reply(success=True, data=data, message='done', error_code=const.code_success)
